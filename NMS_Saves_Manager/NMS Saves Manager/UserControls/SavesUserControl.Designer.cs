@@ -262,6 +262,7 @@
             this.newsaveok.TabIndex = 26;
             this.newsaveok.Text = "OK";
             this.newsaveok.UseVisualStyleBackColor = true;
+            this.newsaveok.Click += new System.EventHandler(this.newsaveok_Click);
             // 
             // textBox1
             // 
@@ -296,6 +297,7 @@
             this.newsave.TabIndex = 24;
             this.newsave.Text = "New Profile";
             this.newsave.UseVisualStyleBackColor = true;
+            this.newsave.Click += new System.EventHandler(this.newsave_Click);
             // 
             // SavesUserControl
             // 

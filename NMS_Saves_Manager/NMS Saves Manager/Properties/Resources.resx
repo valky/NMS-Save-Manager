@@ -129,11 +129,11 @@
   <data name="NMSExeName" xml:space="preserve">
     <value>NMS.exe</value>
   </data>
-  <data name="NMSPcBanksPath" xml:space="preserve">
+  <data name="NMSPcBanksFolder" xml:space="preserve">
     <value>GAMEDATA\PCBANKS</value>
   </data>
-  <data name="NMSRoamingPath" xml:space="preserve">
-    <value>HelloGames\NMS\</value>
+  <data name="NMSProfilesFolder" xml:space="preserve">
+    <value>HelloGames\NMS</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="NMSSM" type="System.Resources.ResXFileRef, System.Windows.Forms">

@@ -109,18 +109,18 @@ namespace NMS_Saves_Manager.Properties {
         /// <summary>
         ///   Looks up a localized string similar to GAMEDATA\PCBANKS.
         /// </summary>
-        internal static string NMSPcBanksPath {
+        internal static string NMSPcBanksFolder {
             get {
-                return ResourceManager.GetString("NMSPcBanksPath", resourceCulture);
+                return ResourceManager.GetString("NMSPcBanksFolder", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HelloGames\NMS\.
+        ///   Looks up a localized string similar to HelloGames\NMS.
         /// </summary>
-        internal static string NMSRoamingPath {
+        internal static string NMSProfilesFolder {
             get {
-                return ResourceManager.GetString("NMSRoamingPath", resourceCulture);
+                return ResourceManager.GetString("NMSProfilesFolder", resourceCulture);
             }
         }
         
