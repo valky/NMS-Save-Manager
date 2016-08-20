@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NMS_Saves_Manager.Managers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,14 @@ namespace NMS_Saves_Manager.Forms
 {
     public partial class MainForm : Form
     {
+        private NMSSMManager _NMSSMManager;
+
         public MainForm()
         {
             InitializeComponent();
+            _NMSSMManager = NMSSMManager.Instance;
         }
+
+
     }
 }

@@ -61,12 +61,66 @@ namespace NMS_Saves_Manager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MODSTORAGE.
+        /// </summary>
+        internal static string ModsStorage {
+            get {
+                return ResourceManager.GetString("ModsStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap NMS_head {
             get {
                 object obj = ResourceManager.GetObject("NMS_head", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Binaries.
+        /// </summary>
+        internal static string NMSBinaries {
+            get {
+                return ResourceManager.GetString("NMSBinaries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NMSELauncher.exe.
+        /// </summary>
+        internal static string NMSEExeName {
+            get {
+                return ResourceManager.GetString("NMSEExeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NMS.exe.
+        /// </summary>
+        internal static string NMSExeName {
+            get {
+                return ResourceManager.GetString("NMSExeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GAMEDATA\PCBANKS.
+        /// </summary>
+        internal static string NMSPcBanksPath {
+            get {
+                return ResourceManager.GetString("NMSPcBanksPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HelloGames\NMS\.
+        /// </summary>
+        internal static string NMSRoamingPath {
+            get {
+                return ResourceManager.GetString("NMSRoamingPath", resourceCulture);
             }
         }
         
