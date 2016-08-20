@@ -28,26 +28,42 @@ namespace NMS_Saves_Manager.Managers
 
         #endregion
 
-        private NMSSMManager _NMSSMManager;
+        private NMSSMManager _NMSSMManager = NMSSMManager.Instance;
 
 
 
         public SaveManager()
         {
-            _NMSSMManager = NMSSMManager.Instance;
+
         }
 
+        /// <summary>
+        /// Create a new profile with the <paramref name="profileName"/>
+        /// </summary>
+        /// <param name="profileName"></param>
         public void CreateNewEmptyProfile(string profileName)
         {
             if (string.IsNullOrWhiteSpace(profileName))
             {
-                throw new Exception("empty name");
+                throw new Exception("empty profile name");
                 //MessageBox.Show("Enter New Profil Name Please.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
+            if (profileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                throw new Exception("Invalid profile name");
+            }
+
             string newProfileFolderPath = _NMSSMManager.NMSSavePath + @"\" + profileName;
+
+            if (Directory.Exists(newProfileFolderPath))
+            {
+                throw new Exception("profile already exist");
+            }
+
             Directory.CreateDirectory(newProfileFolderPath);
 
+            //If it the first profile we copy the existing savefiles in the new profile folder
             if (Directory.GetDirectories(_NMSSMManager.NMSSavePath).Count() < 3)
             {
                 CopySaveToProfile(profileName);
@@ -55,31 +71,48 @@ namespace NMS_Saves_Manager.Managers
 
         }
 
-
-
-
-
-        private void CopySaveToProfile(string profileName)
+        /// <summary>
+        /// Copy the game saves into the profile (<paramref name="profileName"/> ) saves
+        /// </summary>
+        /// <param name="profileName"></param>
+        public void CopySaveToProfile(string profileName)
         {
             string sourcePath = _NMSSMManager.NMSDefaultSavePath;
 
             string profileFolderPath = _NMSSMManager.NMSSavePath + @"\" + profileName;
 
-            if (!Directory.Exists(profileFolderPath))
+            if (Directory.Exists(profileFolderPath))
             {
-                Directory.CreateDirectory(profileFolderPath);
+                Directory.Delete(profileFolderPath, true);
             }
 
-            ////Now Create all of the directories
-            //foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
-            //    Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+            Directory.CreateDirectory(profileFolderPath);
 
-            ////Copy all the files & Replaces any files with the same name
-            //foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
-            //    File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
+            //Now Create all of the directories
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, profileFolderPath));
+
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+                File.Copy(newPath, newPath.Replace(sourcePath, profileFolderPath), true);
         }
 
+        public List<string> GetProfileList()
+        {
+            List<string> profilesList = new List<string>();
 
+            string[] filesPathes = Directory.GetDirectories(_NMSSMManager.NMSSavePath);
+
+            foreach (string filePath in filesPathes)
+            {
+                if (!filePath.Contains(_NMSSMManager.NMSDefaultSavePath))
+                {
+                    profilesList.Add(filePath.Replace(_NMSSMManager.NMSSavePath + @"\", string.Empty));
+                }
+            }
+
+            return profilesList;
+        }
 
     }
 }

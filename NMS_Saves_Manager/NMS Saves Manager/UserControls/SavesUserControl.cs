@@ -8,21 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NMS_Saves_Manager.Managers;
+using System.IO;
 
 namespace NMS_Saves_Manager.UserControls
 {
     public partial class SavesUserControl : UserControl
     {
-        private SaveManager _SaveManager;
-        private NMSSMManager _NMSSMManager;
+        private SaveManager _SaveManager = SaveManager.Instance;
+        private NMSSMManager _NMSSMManager = NMSSMManager.Instance;
+
         public SavesUserControl()
         {
             InitializeComponent();
-
-            //_SaveManager = SaveManager.
-            _SaveManager = SaveManager.Instance;
-            _NMSSMManager = NMSSMManager.Instance;
-
+            LoadList();
         }
 
         private void newsave_Click(object sender, EventArgs e)
@@ -36,6 +34,14 @@ namespace NMS_Saves_Manager.UserControls
         private void newsaveok_Click(object sender, EventArgs e)
         {
             _SaveManager.CreateNewEmptyProfile(textBox1.Text);
+        }
+
+        private void LoadList()
+        {
+            // Create a new FileSystemWatcher and set its properties.
+            //FileSystemWatcher watcher = new FileSystemWatcher();
+            //watcher.NotifyFilter = NotifyFilters.
+            _SaveManager.GetProfileList().ForEach(s => savelist.Items.Add(s));
         }
     }
 }
