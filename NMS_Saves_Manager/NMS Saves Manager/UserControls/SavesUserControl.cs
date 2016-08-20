@@ -20,7 +20,7 @@ namespace NMS_Saves_Manager.UserControls
         public SavesUserControl()
         {
             InitializeComponent();
-            LoadList();
+            RefreshProfileList();
         }
 
         private void newsave_Click(object sender, EventArgs e)
@@ -36,11 +36,8 @@ namespace NMS_Saves_Manager.UserControls
             _SaveManager.CreateNewEmptyProfile(textBox1.Text);
         }
 
-        private void LoadList()
+        private void RefreshProfileList()
         {
-            // Create a new FileSystemWatcher and set its properties.
-            //FileSystemWatcher watcher = new FileSystemWatcher();
-            //watcher.NotifyFilter = NotifyFilters.
             _SaveManager.GetProfileList().ForEach(s => savelist.Items.Add(s));
         }
     }

@@ -97,6 +97,10 @@ namespace NMS_Saves_Manager.Managers
                 File.Copy(newPath, newPath.Replace(sourcePath, profileFolderPath), true);
         }
 
+        /// <summary>
+        /// Return the list of profiles
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetProfileList()
         {
             List<string> profilesList = new List<string>();
