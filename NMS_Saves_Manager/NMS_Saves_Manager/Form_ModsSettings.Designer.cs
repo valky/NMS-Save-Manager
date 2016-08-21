@@ -35,6 +35,7 @@
             this.btn_refreshlist = new System.Windows.Forms.Button();
             this.btn_printmods = new System.Windows.Forms.Button();
             this.btn_ok = new System.Windows.Forms.Button();
+            this.btn_delshade = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,15 +65,16 @@
             // lb_modlist
             // 
             this.lb_modlist.FormattingEnabled = true;
-            this.lb_modlist.Location = new System.Drawing.Point(28, 216);
+            this.lb_modlist.Location = new System.Drawing.Point(39, 196);
             this.lb_modlist.Name = "lb_modlist";
             this.lb_modlist.Size = new System.Drawing.Size(335, 319);
             this.lb_modlist.TabIndex = 5;
             this.lb_modlist.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lb_modlist_ItemCheck);
+            this.lb_modlist.SelectedIndexChanged += new System.EventHandler(this.lb_modlist_SelectedIndexChanged);
             // 
             // btn_refreshlist
             // 
-            this.btn_refreshlist.Location = new System.Drawing.Point(28, 542);
+            this.btn_refreshlist.Location = new System.Drawing.Point(294, 521);
             this.btn_refreshlist.Name = "btn_refreshlist";
             this.btn_refreshlist.Size = new System.Drawing.Size(75, 23);
             this.btn_refreshlist.TabIndex = 6;
@@ -82,9 +84,9 @@
             // 
             // btn_printmods
             // 
-            this.btn_printmods.Location = new System.Drawing.Point(109, 542);
+            this.btn_printmods.Location = new System.Drawing.Point(28, 521);
             this.btn_printmods.Name = "btn_printmods";
-            this.btn_printmods.Size = new System.Drawing.Size(102, 23);
+            this.btn_printmods.Size = new System.Drawing.Size(117, 23);
             this.btn_printmods.TabIndex = 7;
             this.btn_printmods.Text = "Print Mods List";
             this.btn_printmods.UseVisualStyleBackColor = true;
@@ -100,11 +102,22 @@
             this.btn_ok.UseVisualStyleBackColor = true;
             this.btn_ok.Click += new System.EventHandler(this.btn_ok_Click);
             // 
+            // btn_delshade
+            // 
+            this.btn_delshade.Location = new System.Drawing.Point(28, 551);
+            this.btn_delshade.Name = "btn_delshade";
+            this.btn_delshade.Size = new System.Drawing.Size(117, 23);
+            this.btn_delshade.TabIndex = 9;
+            this.btn_delshade.Text = "Delete Shadercache";
+            this.btn_delshade.UseVisualStyleBackColor = true;
+            this.btn_delshade.Click += new System.EventHandler(this.btn_delshade_Click);
+            // 
             // Form_ModsSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(419, 609);
+            this.Controls.Add(this.btn_delshade);
             this.Controls.Add(this.btn_ok);
             this.Controls.Add(this.btn_printmods);
             this.Controls.Add(this.btn_refreshlist);
@@ -130,5 +143,6 @@
         private System.Windows.Forms.Button btn_refreshlist;
         private System.Windows.Forms.Button btn_printmods;
         private System.Windows.Forms.Button btn_ok;
+        private System.Windows.Forms.Button btn_delshade;
     }
 }

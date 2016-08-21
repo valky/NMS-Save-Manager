@@ -19,6 +19,8 @@ namespace NMS_Saves_Manager
         static extern int SetForegroundWindow(IntPtr point);
 
 
+        static string version = "0.5.0b";
+        private string newversion = "0.5.1";
         static string nmsprofilefolder = @"\HelloGames\NMS\";
         private string savepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder);
         static string NMSpath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
@@ -30,25 +32,58 @@ namespace NMS_Saves_Manager
         private string NMSextpath = NMSpath + @"\NMSELauncher.exe";
         private string lastloaded = "DefaultUser";
         private string profiltoload = "";
+        private string userprofile = "DefaultUser";
+        private string steamfolder = "";
 
         private bool onloadprofil = false;
         private bool isfirstprofile = false;
         private int autobackupdelay = 0;
+        private bool isgog = true;
+
 
         public form_main()
         {
+
             if (!Directory.Exists(savepath + "DefaultUser"))
             {
-                MessageBox.Show("NMS saves directory not found. Please run ''No Man's Sky'' once before using NMS Saves Manager", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                isgog = false;
+            }
 
-                foreach (var process in System.Diagnostics.Process.GetProcessesByName("NMS_Saves_Manager"))
+            if (isgog == false)
+            {
+                DirectoryInfo saves = new DirectoryInfo(savepath);
+                FileSystemInfo[] filesAndDirs = saves.GetFileSystemInfos("st_*");
+                int processed = 0;
+
+                foreach (FileSystemInfo foundFile in filesAndDirs)
                 {
-                    process.Kill();
+                    steamfolder = foundFile.Name;
+                    userprofile = foundFile.Name;
+                    if (++processed == 1) break;
+                }
+                if (steamfolder == "")
+                {
+                    MessageBox.Show("No Profile folder found. Please run ''No Man's Sky'' once before using NMS Saves Manager", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    foreach (var process in Process.GetProcessesByName("NMS_Saves_Manager"))
+                    {
+                        process.Kill();
+                    }
                 }
             }
-            else
-            {
+
+            // >>>>>>>>>>>>>>> Get le numero de la nouvelle version
+            //if (version != newversion)
+            //{
+            //    if (MessageBox.Show("A new version of NMS Manager is live ! Do you wish to update ?", "Visit", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+            //    {
+            //        System.Diagnostics.Process.Start("http://nomansskymods.com/mods/nms-saves-and-mods-manager/");
+            //        System.Diagnostics.Process.Start("http://www.nexusmods.com/nomanssky/mods/49?");
+            //    }
+            //}
+
+
                 InitializeComponent();
+
                 if (!File.Exists(lastloadedstorage))
                 {
                     File.Create(lastloadedstorage).Close();
@@ -63,7 +98,7 @@ namespace NMS_Saves_Manager
                 {
                     string profil = System.IO.File.ReadAllText(lastloadedstorage);
                     string profilsave = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + profil);
-                    string defaultuser = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "DefaultUser");
+                    string defaultuser = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
 
                     if (!Directory.Exists(defaultuser))
                     {
@@ -83,7 +118,7 @@ namespace NMS_Saves_Manager
                     //Copy all the files & Replaces any files with the same name
                     foreach (string newPath in Directory.GetFiles(defaultuser, "*.*", SearchOption.AllDirectories))
                         File.Copy(newPath, newPath.Replace(defaultuser, profilsave), true);
-                }
+                
 
                 //if (Directory.Exists(profilsave))
                 //{
@@ -97,11 +132,10 @@ namespace NMS_Saves_Manager
                     string deleteit = savepath + "DeleteThisProfile";
                     Directory.Delete((deleteit), true);
                 }
-
-                refreshsaves();
+   
                 lastsession.Text = lastloaded;
                 actload.Text = "-";
-
+                refreshsaves();
                 if (savelist.Items.Count == 0)
                 {
                     MessageBox.Show("It seems it's the first time you are using NMS Saves Manager. Please create a new profile. NMS Saves Manager will then transfer your actual DefaultUser to this profile", "Welcome to NMS Saves Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -137,7 +171,7 @@ namespace NMS_Saves_Manager
                     var folder = Directory.CreateDirectory(savepath + "\\" + newsavename);
                     textBox1.Enabled = false;
                     newsaveok.Enabled = false;
-                    string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "DefaultUser");
+                    string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
                     string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + newsavename);
 
 
@@ -156,8 +190,8 @@ namespace NMS_Saves_Manager
                     var folder = Directory.CreateDirectory(savepath + @"\" + newsavename);
                     textBox1.Enabled = false;
                     newsaveok.Enabled = false;
-                    string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "DefaultUser");
-                    string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "DefaultUser_old");
+                    string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
+                    string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile + "_old");
 
                     if (Directory.Exists(destinationpath))
                     {
@@ -254,7 +288,7 @@ namespace NMS_Saves_Manager
             {
                 string curitem = savelist.SelectedItem.ToString();
                 string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem + "_old");
-                string defaultpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "DefaultUser");
+                string defaultpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
                 if (Directory.Exists(destinationpath))
                 {
                     Directory.Delete(destinationpath, true);                    
@@ -272,10 +306,10 @@ namespace NMS_Saves_Manager
 
             foreach (DirectoryInfo file in Files)
                 {
-                    if (!file.Name.Contains("DefaultUser") && !file.Name.Contains("_old"))
+                    if (!file.Name.Contains(userprofile) && !file.Name.Contains("_old") && !file.Name.Contains("st_"))
                     {
-                        savelist.Items.Add(file.Name);
-                    }
+                        savelist.Items.Add(file.Name);                    
+                }
                 }
         }//Refresh saves list
 
@@ -299,8 +333,8 @@ namespace NMS_Saves_Manager
             }
             else
             {
-                string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "DefaultUser");
-                string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "DefaultUser_old");
+                string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
+                string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile + "_old");
                 onloadprofil = true;
 
                 if (Directory.Exists(destinationpath))
@@ -326,7 +360,7 @@ namespace NMS_Saves_Manager
 
                 string curitem = savelist.SelectedItem.ToString();
                 string sourcenew = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem);
-                string destinationnew = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "DefaultUser");
+                string destinationnew = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
                 profiltoload = curitem; 
 
 
@@ -360,7 +394,7 @@ namespace NMS_Saves_Manager
                     }
                     else
                     {
-                        System.Diagnostics.Process.Start(NMSpathexe);
+                            System.Diagnostics.Process.Start(NMSpathexe);
                     }
                     doautoqwerty();
                 }
@@ -373,7 +407,7 @@ namespace NMS_Saves_Manager
                     }
                     else
                     {
-                        System.Diagnostics.Process.Start(NMSpathexe);
+                            System.Diagnostics.Process.Start(NMSpathexe);
                     }
                     doautoqwerty();
                     System.Windows.Forms.Application.Exit();
@@ -386,7 +420,7 @@ namespace NMS_Saves_Manager
         {
             string profil = System.IO.File.ReadAllText(lastloadedstorage);
             string profilsave = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + profil);
-            string defaultuser = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "DefaultUser");
+            string defaultuser = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
 
             if (Directory.Exists(profilsave))
             {
@@ -465,5 +499,17 @@ namespace NMS_Saves_Manager
             Form_ModsSettings modset = new Form_ModsSettings();
             modset.Show();
         }
+
+        private void actloaded_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+    public enum GameVersionsEnum
+    {
+        GOG,
+        Steam,
+        NotSet,
+        Unknowed
     }
 }

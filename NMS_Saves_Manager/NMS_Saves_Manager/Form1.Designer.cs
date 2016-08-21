@@ -71,7 +71,7 @@
             // 
             // savefolder
             // 
-            this.savefolder.Location = new System.Drawing.Point(35, 443);
+            this.savefolder.Location = new System.Drawing.Point(48, 443);
             this.savefolder.Name = "savefolder";
             this.savefolder.Size = new System.Drawing.Size(135, 24);
             this.savefolder.TabIndex = 1;
@@ -211,7 +211,7 @@
             // 
             this.checkautoqwerty.AccessibleDescription = "";
             this.checkautoqwerty.AutoSize = true;
-            this.checkautoqwerty.Location = new System.Drawing.Point(301, 421);
+            this.checkautoqwerty.Location = new System.Drawing.Point(301, 443);
             this.checkautoqwerty.Name = "checkautoqwerty";
             this.checkautoqwerty.Size = new System.Drawing.Size(99, 17);
             this.checkautoqwerty.TabIndex = 15;
@@ -223,7 +223,7 @@
             // 
             this.helplabel.AutoSize = true;
             this.helplabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.helplabel.Location = new System.Drawing.Point(33, 553);
+            this.helplabel.Location = new System.Drawing.Point(50, 549);
             this.helplabel.Name = "helplabel";
             this.helplabel.Size = new System.Drawing.Size(71, 36);
             this.helplabel.TabIndex = 16;
@@ -233,7 +233,7 @@
             // 
             this.lastsession.AutoSize = true;
             this.lastsession.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lastsession.Location = new System.Drawing.Point(110, 553);
+            this.lastsession.Location = new System.Drawing.Point(127, 549);
             this.lastsession.Name = "lastsession";
             this.lastsession.Size = new System.Drawing.Size(29, 12);
             this.lastsession.TabIndex = 17;
@@ -243,16 +243,17 @@
             // 
             this.actloaded.AutoSize = true;
             this.actloaded.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.actloaded.Location = new System.Drawing.Point(110, 512);
+            this.actloaded.Location = new System.Drawing.Point(123, 512);
             this.actloaded.Name = "actloaded";
             this.actloaded.Size = new System.Drawing.Size(0, 12);
             this.actloaded.TabIndex = 18;
+            this.actloaded.Click += new System.EventHandler(this.actloaded_Click);
             // 
             // actload
             // 
             this.actload.AutoSize = true;
             this.actload.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.actload.Location = new System.Drawing.Point(110, 577);
+            this.actload.Location = new System.Drawing.Point(127, 573);
             this.actload.Name = "actload";
             this.actload.Size = new System.Drawing.Size(29, 12);
             this.actload.TabIndex = 17;
@@ -260,7 +261,7 @@
             // 
             // openbinaries
             // 
-            this.openbinaries.Location = new System.Drawing.Point(35, 473);
+            this.openbinaries.Location = new System.Drawing.Point(48, 473);
             this.openbinaries.Name = "openbinaries";
             this.openbinaries.Size = new System.Drawing.Size(135, 24);
             this.openbinaries.TabIndex = 19;
@@ -270,7 +271,7 @@
             // 
             // openmods
             // 
-            this.openmods.Location = new System.Drawing.Point(35, 505);
+            this.openmods.Location = new System.Drawing.Point(48, 505);
             this.openmods.Name = "openmods";
             this.openmods.Size = new System.Drawing.Size(135, 24);
             this.openmods.TabIndex = 20;
@@ -304,7 +305,7 @@
             this.useNMSe.AutoSize = true;
             this.useNMSe.Checked = true;
             this.useNMSe.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.useNMSe.Location = new System.Drawing.Point(301, 443);
+            this.useNMSe.Location = new System.Drawing.Point(301, 422);
             this.useNMSe.Name = "useNMSe";
             this.useNMSe.Size = new System.Drawing.Size(116, 17);
             this.useNMSe.TabIndex = 23;
@@ -328,15 +329,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(420, 601);
-            this.Controls.Add(this.useNMSe);
-            this.Controls.Add(this.modssettings);
-            this.Controls.Add(this.gamesettings);
             this.Controls.Add(this.openmods);
             this.Controls.Add(this.openbinaries);
             this.Controls.Add(this.actloaded);
             this.Controls.Add(this.actload);
             this.Controls.Add(this.lastsession);
             this.Controls.Add(this.helplabel);
+            this.Controls.Add(this.savefolder);
+            this.Controls.Add(this.useNMSe);
+            this.Controls.Add(this.modssettings);
+            this.Controls.Add(this.gamesettings);
             this.Controls.Add(this.checkautoqwerty);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -351,7 +353,6 @@
             this.Controls.Add(this.newsaveok);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.savelist);
-            this.Controls.Add(this.savefolder);
             this.Controls.Add(this.newsave);
             this.Controls.Add(this.pictureBox1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
