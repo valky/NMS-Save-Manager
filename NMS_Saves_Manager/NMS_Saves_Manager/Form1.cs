@@ -391,12 +391,12 @@ namespace NMS_Saves_Manager
 
                     if ((File.Exists(NMSextpath)) && (useNMSe.Checked == true))
                     {
-                        System.Diagnostics.Process.Start(NMSextpath);
+                        Process.Start(NMSextpath);
                         System.Threading.Thread.Sleep(5000);
                     }
                     else
                     {
-                            System.Diagnostics.Process.Start(NMSpathexe);
+                            Process.Start(NMSpathexe);
                     }
 
                     var timer2 = new System.Threading.Timer(
@@ -453,7 +453,7 @@ namespace NMS_Saves_Manager
             System.Diagnostics.Process[] proc = System.Diagnostics.Process.GetProcessesByName("NMS");
             if (proc.Length == 0) 
             {
-                loadsave.Enabled = true;
+               // loadsave.Enabled = true;
                 if (checkbkpauto.Checked == true)
                 {
                     trackBar1.Enabled = true;
