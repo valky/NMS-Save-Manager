@@ -34,8 +34,8 @@
             this.openmods = new System.Windows.Forms.Button();
             this.openbinaries = new System.Windows.Forms.Button();
             this.actloaded = new System.Windows.Forms.Label();
-            this.actload = new System.Windows.Forms.Label();
-            this.lastsession = new System.Windows.Forms.Label();
+            this.LBL_CurrentProfile = new System.Windows.Forms.Label();
+            this.LBL_LastProfileLoaded = new System.Windows.Forms.Label();
             this.helplabel = new System.Windows.Forms.Label();
             this.checkautoqwerty = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -60,8 +60,6 @@
             // 
             this.useNMSe.AccessibleDescription = "";
             this.useNMSe.AutoSize = true;
-            this.useNMSe.Checked = true;
-            this.useNMSe.CheckState = System.Windows.Forms.CheckState.Checked;
             this.useNMSe.Location = new System.Drawing.Point(282, 253);
             this.useNMSe.Name = "useNMSe";
             this.useNMSe.Size = new System.Drawing.Size(116, 17);
@@ -96,6 +94,7 @@
             this.openmods.TabIndex = 45;
             this.openmods.Text = "Open Mods Folder";
             this.openmods.UseVisualStyleBackColor = true;
+            this.openmods.Click += new System.EventHandler(this.openmods_Click);
             // 
             // openbinaries
             // 
@@ -105,6 +104,7 @@
             this.openbinaries.TabIndex = 44;
             this.openbinaries.Text = "Open Binaries Folder";
             this.openbinaries.UseVisualStyleBackColor = true;
+            this.openbinaries.Click += new System.EventHandler(this.openbinaries_Click);
             // 
             // actloaded
             // 
@@ -115,25 +115,23 @@
             this.actloaded.Size = new System.Drawing.Size(0, 12);
             this.actloaded.TabIndex = 43;
             // 
-            // actload
+            // LBL_CurrentProfile
             // 
-            this.actload.AutoSize = true;
-            this.actload.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.actload.Location = new System.Drawing.Point(91, 387);
-            this.actload.Name = "actload";
-            this.actload.Size = new System.Drawing.Size(29, 12);
-            this.actload.TabIndex = 42;
-            this.actload.Text = "label6";
+            this.LBL_CurrentProfile.AutoSize = true;
+            this.LBL_CurrentProfile.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_CurrentProfile.Location = new System.Drawing.Point(91, 387);
+            this.LBL_CurrentProfile.Name = "LBL_CurrentProfile";
+            this.LBL_CurrentProfile.Size = new System.Drawing.Size(0, 12);
+            this.LBL_CurrentProfile.TabIndex = 42;
             // 
-            // lastsession
+            // LBL_LastProfileLoaded
             // 
-            this.lastsession.AutoSize = true;
-            this.lastsession.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lastsession.Location = new System.Drawing.Point(91, 363);
-            this.lastsession.Name = "lastsession";
-            this.lastsession.Size = new System.Drawing.Size(29, 12);
-            this.lastsession.TabIndex = 41;
-            this.lastsession.Text = "label6";
+            this.LBL_LastProfileLoaded.AutoSize = true;
+            this.LBL_LastProfileLoaded.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_LastProfileLoaded.Location = new System.Drawing.Point(91, 363);
+            this.LBL_LastProfileLoaded.Name = "LBL_LastProfileLoaded";
+            this.LBL_LastProfileLoaded.Size = new System.Drawing.Size(0, 12);
+            this.LBL_LastProfileLoaded.TabIndex = 41;
             // 
             // helplabel
             // 
@@ -234,6 +232,7 @@
             this.loadsave.TabIndex = 31;
             this.loadsave.Text = "Load Profile";
             this.loadsave.UseVisualStyleBackColor = true;
+            this.loadsave.Click += new System.EventHandler(this.loadsave_Click);
             // 
             // savecopy
             // 
@@ -253,6 +252,7 @@
             this.refreshlist.TabIndex = 28;
             this.refreshlist.Text = "Refresh";
             this.refreshlist.UseVisualStyleBackColor = true;
+            this.refreshlist.Click += new System.EventHandler(this.refreshlist_Click);
             // 
             // newsaveok
             // 
@@ -280,6 +280,7 @@
             this.savelist.Name = "savelist";
             this.savelist.Size = new System.Drawing.Size(328, 69);
             this.savelist.TabIndex = 30;
+            this.savelist.SelectedIndexChanged += new System.EventHandler(this.savelist_SelectedIndexChanged);
             // 
             // savefolder
             // 
@@ -289,6 +290,7 @@
             this.savefolder.TabIndex = 25;
             this.savefolder.Text = "Open Saves Folder";
             this.savefolder.UseVisualStyleBackColor = true;
+            this.savefolder.Click += new System.EventHandler(this.savefolder_Click);
             // 
             // newsave
             // 
@@ -310,8 +312,8 @@
             this.Controls.Add(this.openmods);
             this.Controls.Add(this.openbinaries);
             this.Controls.Add(this.actloaded);
-            this.Controls.Add(this.actload);
-            this.Controls.Add(this.lastsession);
+            this.Controls.Add(this.LBL_CurrentProfile);
+            this.Controls.Add(this.LBL_LastProfileLoaded);
             this.Controls.Add(this.helplabel);
             this.Controls.Add(this.checkautoqwerty);
             this.Controls.Add(this.label4);
@@ -345,8 +347,8 @@
         private System.Windows.Forms.Button openmods;
         private System.Windows.Forms.Button openbinaries;
         private System.Windows.Forms.Label actloaded;
-        private System.Windows.Forms.Label actload;
-        private System.Windows.Forms.Label lastsession;
+        private System.Windows.Forms.Label LBL_CurrentProfile;
+        private System.Windows.Forms.Label LBL_LastProfileLoaded;
         private System.Windows.Forms.Label helplabel;
         private System.Windows.Forms.CheckBox checkautoqwerty;
         private System.Windows.Forms.Label label4;

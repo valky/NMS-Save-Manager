@@ -112,7 +112,7 @@ namespace NMS_Saves_Manager.Managers
             {
                 //We filter on the default save path and the backups
                 if (!filePath.Contains(_NMSSMManager.NMSDefaultSavePath) 
-                    ||
+                    &&
                     !filePath.Contains(_NMSSMManager.NMSBackupsPath))
                 {
                     profilesList.Add(filePath.Replace(_NMSSMManager.NMSSavePath + @"\", string.Empty));
@@ -150,7 +150,7 @@ namespace NMS_Saves_Manager.Managers
                 File.SetAttributes(backupsFolderPath, FileAttributes.Normal);
             }
 
-            string dest = backupsFolderPath + @"\" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + " - " + profileName;
+            string dest = backupsFolderPath + @"\" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString().Replace(":","-") + " - " + profileName;
 
             //Now Create all of the directories
             foreach (string dirPath in Directory.GetDirectories(profileFolderPath, "*", SearchOption.AllDirectories))

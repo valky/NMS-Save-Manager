@@ -61,6 +61,15 @@ namespace NMS_Saves_Manager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LastProfileLoaded.
+        /// </summary>
+        internal static string LastProfileLoadedFileName {
+            get {
+                return ResourceManager.GetString("LastProfileLoadedFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MODSTORAGE.
         /// </summary>
         internal static string ModsStorage {
@@ -140,6 +149,15 @@ namespace NMS_Saves_Manager.Properties {
         internal static string ProfilesBackupsFolder {
             get {
                 return ResourceManager.GetString("ProfilesBackupsFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PROFILESTORAGE.
+        /// </summary>
+        internal static string ProfilesStorage {
+            get {
+                return ResourceManager.GetString("ProfilesStorage", resourceCulture);
             }
         }
     }

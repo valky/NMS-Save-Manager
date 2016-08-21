@@ -139,7 +139,7 @@ namespace NMS_Saves_Manager.Managers
             }
         }
 
-        public string NMSBinariesPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+        public string NMSBinariesPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
 
         private GameVersionsEnum _GameVersion;
         public GameVersionsEnum GameVersion
@@ -170,15 +170,40 @@ namespace NMS_Saves_Manager.Managers
             }
         }
 
+        private string _ProfilesStoragePath = string.Empty;
+        public string ProfilesStoragePath
+        {
+            get
+            {
+                if (_ProfilesStoragePath == string.Empty)
+                {
+                    _ProfilesStoragePath = NMSBinariesPath + @"\" + Resources.ProfilesStorage;
+                }
+                return _ProfilesStoragePath;
+            }
+        }
+
+        private string _LastProfilesLoadedFilePath = string.Empty;
+        public string LastProfilesLoadedFilePath
+        {
+            get
+            {
+                if (_LastProfilesLoadedFilePath == string.Empty)
+                {
+                    _LastProfilesLoadedFilePath = ProfilesStoragePath + @"\" + Resources.LastProfileLoadedFileName;
+                }
+                return _LastProfilesLoadedFilePath;
+            }
+        }
+
+
+        public string CurrentProfile = string.Empty;
         #endregion
 
         public NMSSMManager()
         {
-
-
+            CurrentProfile = GetLastProfileLoaded();    
         }
-
-
 
         private void DetectGameVersion()
         {
@@ -201,6 +226,33 @@ namespace NMS_Saves_Manager.Managers
 
             if (isGOG && isSteam)
                 _GameVersion = GameVersionsEnum.Unknowed;
+        }
+
+        private string GetLastProfileLoaded()
+        {
+            string profileName = string.Empty;
+            if (File.Exists(LastProfilesLoadedFilePath))
+            {
+                profileName = File.ReadAllText(LastProfilesLoadedFilePath);
+            }
+            return profileName;
+        }
+
+
+        public void SetLastProfileLoaded()
+        {
+            if (string.IsNullOrEmpty(CurrentProfile))
+                throw new Exception("Profile not set");
+
+            if (!Directory.Exists(ProfilesStoragePath))
+            {
+                Directory.CreateDirectory(ProfilesStoragePath);
+                File.SetAttributes(ProfilesStoragePath, FileAttributes.Normal);
+            }
+
+            FileStream write = File.Create(LastProfilesLoadedFilePath);
+            write.Dispose();
+            File.WriteAllText(LastProfilesLoadedFilePath, CurrentProfile);
         }
     }
 }
