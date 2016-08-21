@@ -310,7 +310,7 @@ namespace NMS_Saves_Manager
                     {
                         savelist.Items.Add(file.Name);                    
                 }
-                }
+        }
         }//Refresh saves list
 
         private void checkbkpauto_CheckedChanged(object sender, EventArgs e)
@@ -500,9 +500,10 @@ namespace NMS_Saves_Manager
             modset.Show();
         }
 
-        private void actloaded_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e)
         {
-
+            form_restoreprofile backup = new form_restoreprofile();
+            backup.Show();
         }
     }
     public enum GameVersionsEnum

@@ -55,13 +55,14 @@
             this.modssettings = new System.Windows.Forms.Button();
             this.useNMSe = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btn_restore = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // newsave
             // 
-            this.newsave.Location = new System.Drawing.Point(48, 202);
+            this.newsave.Location = new System.Drawing.Point(24, 202);
             this.newsave.Name = "newsave";
             this.newsave.Size = new System.Drawing.Size(113, 38);
             this.newsave.TabIndex = 1;
@@ -119,7 +120,7 @@
             // 
             // savecopy
             // 
-            this.savecopy.Location = new System.Drawing.Point(272, 202);
+            this.savecopy.Location = new System.Drawing.Point(155, 202);
             this.savecopy.Name = "savecopy";
             this.savecopy.Size = new System.Drawing.Size(113, 38);
             this.savecopy.TabIndex = 9;
@@ -247,7 +248,6 @@
             this.actloaded.Name = "actloaded";
             this.actloaded.Size = new System.Drawing.Size(0, 12);
             this.actloaded.TabIndex = 18;
-            this.actloaded.Click += new System.EventHandler(this.actloaded_Click);
             // 
             // actload
             // 
@@ -324,11 +324,22 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // btn_restore
+            // 
+            this.btn_restore.Location = new System.Drawing.Point(286, 202);
+            this.btn_restore.Name = "btn_restore";
+            this.btn_restore.Size = new System.Drawing.Size(114, 38);
+            this.btn_restore.TabIndex = 24;
+            this.btn_restore.Text = "Restore Profile";
+            this.btn_restore.UseVisualStyleBackColor = true;
+            this.btn_restore.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // form_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(420, 601);
+            this.Controls.Add(this.btn_restore);
             this.Controls.Add(this.openmods);
             this.Controls.Add(this.openbinaries);
             this.Controls.Add(this.actloaded);
@@ -397,6 +408,7 @@
         private System.Windows.Forms.Button gamesettings;
         private System.Windows.Forms.Button modssettings;
         private System.Windows.Forms.CheckBox useNMSe;
+        private System.Windows.Forms.Button btn_restore;
     }
 }
 
