@@ -133,5 +133,14 @@ namespace NMS_Saves_Manager.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backups.
+        /// </summary>
+        internal static string ProfilesBackupsFolder {
+            get {
+                return ResourceManager.GetString("ProfilesBackupsFolder", resourceCulture);
+            }
+        }
     }
 }

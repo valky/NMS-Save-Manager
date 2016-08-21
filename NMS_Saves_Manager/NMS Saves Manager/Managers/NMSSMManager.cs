@@ -154,6 +154,22 @@ namespace NMS_Saves_Manager.Managers
             }
         }
 
+        private string _NMSBackupsPath = string.Empty;
+        public string NMSBackupsPath
+        {
+            get
+            {
+                if (_NMSBackupsPath == string.Empty)
+                {
+
+                    _NMSBackupsPath = NMSSavePath + @"\" + Resources.ProfilesBackupsFolder;
+
+
+                }
+                return _NMSBackupsPath;
+            }
+        }
+
         #endregion
 
         public NMSSMManager()

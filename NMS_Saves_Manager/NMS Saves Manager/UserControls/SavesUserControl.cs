@@ -36,6 +36,25 @@ namespace NMS_Saves_Manager.UserControls
             _SaveManager.CreateNewEmptyProfile(textBox1.Text);
         }
 
+
+        private void savecopy_Click(object sender, EventArgs e)
+        {
+            if (savelist.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a save first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                string name = savelist.SelectedItem.ToString();
+                _SaveManager.BackupProfile(name);
+                MessageBox.Show("Backup of " + name + "'s profile done. You can restore it by renaming " + name + "_old to " + name + " in saves folder", "NMS Saves Manager: Backup successfull", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+
+
+
+
         private void RefreshProfileList()
         {
             _SaveManager.GetProfileList().ForEach(s => savelist.Items.Add(s));

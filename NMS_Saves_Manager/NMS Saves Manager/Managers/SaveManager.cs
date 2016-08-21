@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -109,13 +110,55 @@ namespace NMS_Saves_Manager.Managers
 
             foreach (string filePath in filesPathes)
             {
-                if (!filePath.Contains(_NMSSMManager.NMSDefaultSavePath))
+                //We filter on the default save path and the backups
+                if (!filePath.Contains(_NMSSMManager.NMSDefaultSavePath) 
+                    ||
+                    !filePath.Contains(_NMSSMManager.NMSBackupsPath))
                 {
                     profilesList.Add(filePath.Replace(_NMSSMManager.NMSSavePath + @"\", string.Empty));
                 }
             }
 
             return profilesList;
+        }
+
+        public void BackupProfile(string profileName)
+        {
+            if (string.IsNullOrWhiteSpace(profileName))
+            {
+                throw new Exception("empty profile name");
+            }
+
+            if (profileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                throw new Exception("Invalid profile name");
+            }
+
+            string profileFolderPath = _NMSSMManager.NMSSavePath + @"\" + profileName;
+
+            if (! Directory.Exists(profileFolderPath))
+            {
+                throw new Exception("profile doesn't exist");
+            }
+
+            string backupsFolderPath = _NMSSMManager.NMSBackupsPath;
+
+            //If the backups folder didn t exist we create it
+            if (!Directory.Exists(backupsFolderPath))
+            {
+                Directory.CreateDirectory(backupsFolderPath);
+                File.SetAttributes(backupsFolderPath, FileAttributes.Normal);
+            }
+
+            string dest = backupsFolderPath + @"\" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + " - " + profileName;
+
+            //Now Create all of the directories
+            foreach (string dirPath in Directory.GetDirectories(profileFolderPath, "*", SearchOption.AllDirectories))
+                Directory.CreateDirectory(dirPath.Replace(profileFolderPath, dest));
+
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(profileFolderPath, "*.*", SearchOption.AllDirectories))
+                File.Copy(newPath, newPath.Replace(profileFolderPath, dest), true);
         }
 
     }

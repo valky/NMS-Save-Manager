@@ -243,6 +243,7 @@
             this.savecopy.TabIndex = 29;
             this.savecopy.Text = "Backup Profile";
             this.savecopy.UseVisualStyleBackColor = true;
+            this.savecopy.Click += new System.EventHandler(this.savecopy_Click);
             // 
             // refreshlist
             // 
