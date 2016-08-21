@@ -387,6 +387,8 @@ namespace NMS_Saves_Manager
                     null,
                     TimeSpan.Zero,
                     TimeSpan.FromMinutes(autobackupdelay));
+
+
                     if ((File.Exists(NMSextpath)) && (useNMSe.Checked == true))
                     {
                         System.Diagnostics.Process.Start(NMSextpath);
@@ -396,6 +398,13 @@ namespace NMS_Saves_Manager
                     {
                             System.Diagnostics.Process.Start(NMSpathexe);
                     }
+
+                    var timer2 = new System.Threading.Timer(
+                   t => testNMSrunning(),
+                    null,
+                    TimeSpan.Zero,
+                    TimeSpan.FromSeconds(2));
+
                     doautoqwerty();
                 }
                 else
@@ -504,6 +513,16 @@ namespace NMS_Saves_Manager
         {
             form_restoreprofile backup = new form_restoreprofile();
             backup.Show();
+        }
+
+        private void testNMSrunning()
+        {
+            Process[] pname = Process.GetProcessesByName("NMS");
+            if (pname.Length == 0)
+                foreach (var process in Process.GetProcessesByName("NMS_Saves_Manager"))
+                {
+                    process.Kill();
+                }
         }
     }
     public enum GameVersionsEnum
