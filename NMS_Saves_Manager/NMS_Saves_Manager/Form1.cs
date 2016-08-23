@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace NMS_Saves_Manager
-{
+{  
     public partial class form_main : Form
     {
         [DllImport("User32.dll")]
@@ -25,7 +25,9 @@ namespace NMS_Saves_Manager
         private string savepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder);
         static string NMSpath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
         static string lastloadedstorage = NMSpath + @"\profilstorage";
+        static string steamIDstorage = NMSpath + @"\steamIDstorage";
         static string modstoragepath = NMSpath + @"\MODSTORAGE";
+        static string NMSEpath = NMSpath + @"\NMSE";
         static string NMSmodspath = NMSpath.Replace(@"\Binaries", @"\GAMEDATA\PCBANKS");
         private string loaded = "DefaultUser";
         private string NMSpathexe = NMSpath + @"\NMS.exe";
@@ -33,23 +35,25 @@ namespace NMS_Saves_Manager
         private string lastloaded = "DefaultUser";
         private string profiltoload = "";
         private string userprofile = "DefaultUser";
-        private string steamfolder = "";
+        private string steamfolder = "";        
 
         private bool onloadprofil = false;
         private bool isfirstprofile = false;
         private int autobackupdelay = 0;
-        private bool isgog = true;
 
 
         public form_main()
         {
-
+            if (!Directory.Exists(NMSEpath))
+            {
+                Directory.CreateDirectory(NMSEpath);
+            }
             if (!Directory.Exists(savepath + "DefaultUser"))
             {
-                isgog = false;
+                Globals.isgog = false;
             }
 
-            if (isgog == false)
+            if (Globals.isgog == false)
             {
                 DirectoryInfo saves = new DirectoryInfo(savepath);
                 FileSystemInfo[] filesAndDirs = saves.GetFileSystemInfos("st_*");
@@ -59,9 +63,30 @@ namespace NMS_Saves_Manager
                 {
                     steamfolder = foundFile.Name;
                     userprofile = foundFile.Name;
-                    if (++processed == 1) break;
+                    if (++processed == 2)
+                        break;
                 }
+
+                if (processed == 1)
+                {
+                    Globals.steamID = steamfolder.Replace("st_", "");
+                }
+
+                if (processed == 2)
+                {
+                    form_steamselection getID = new form_steamselection();
+                    getID.ShowDialog();
+                }
+
                 if (steamfolder == "")
+                {
+                    MessageBox.Show("No Profile folder found. Please run ''No Man's Sky'' once before using NMS Saves Manager", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    foreach (var process in Process.GetProcessesByName("NMS_Saves_Manager"))
+                    {
+                        process.Kill();
+                    }
+                }
+                if (Globals.steamID == "")
                 {
                     MessageBox.Show("No Profile folder found. Please run ''No Man's Sky'' once before using NMS Saves Manager", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     foreach (var process in Process.GetProcessesByName("NMS_Saves_Manager"))
@@ -82,20 +107,32 @@ namespace NMS_Saves_Manager
             //}
 
 
-                InitializeComponent();
-
+            InitializeComponent();
+            if (Globals.isgog == true)
+            {
                 if (!File.Exists(lastloadedstorage))
                 {
                     File.Create(lastloadedstorage).Close();
                     File.WriteAllText(lastloadedstorage, "DeleteThisProfile");
-
                 }
+            }
+            else
+            {
+                string lastloadedsteam = NMSpath + @"\" + Globals.steamID;
+                if (!File.Exists(lastloadedsteam))
+                {
+                    File.Create(lastloadedsteam).Close();
+                    File.WriteAllText(lastloadedsteam, "DeleteThisProfile");
+                }
+            }
 
-                string loaded = System.IO.File.ReadAllText(lastloadedstorage);
-                string lastloaded = System.IO.File.ReadAllText(lastloadedstorage);
-
+            if (Globals.isgog == true)
+            {
                 if (lastloaded != "" && lastloaded != "DefaultUser" && lastloaded != "DeleteThisProfile")
                 {
+                    string loaded = System.IO.File.ReadAllText(lastloadedstorage);
+                    string lastloaded = System.IO.File.ReadAllText(lastloadedstorage);
+
                     string profil = System.IO.File.ReadAllText(lastloadedstorage);
                     string profilsave = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + profil);
                     string defaultuser = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
@@ -108,6 +145,11 @@ namespace NMS_Saves_Manager
                     if (Directory.Exists(profilsave))
                     {
                         Directory.Delete((profilsave), true);
+                        System.Threading.Thread.Sleep(500);
+                        Directory.CreateDirectory(profilsave);
+                    }
+                    else
+                    {
                         Directory.CreateDirectory(profilsave);
                     }
 
@@ -118,30 +160,75 @@ namespace NMS_Saves_Manager
                     //Copy all the files & Replaces any files with the same name
                     foreach (string newPath in Directory.GetFiles(defaultuser, "*.*", SearchOption.AllDirectories))
                         File.Copy(newPath, newPath.Replace(defaultuser, profilsave), true);
-                
 
-                //if (Directory.Exists(profilsave))
-                //{
-                //    Directory.Delete(profilsave, true);
-                //    Directory.CreateDirectory(profilsave);
-                //}
+                    if (Directory.Exists(savepath + "DeleteThisProfile"))
+                    {
+                        Directory.Delete((savepath + "DeleteThisProfile"), true);
+                    }
 
+                    lastsession.Text = lastloaded;
+                    actload.Text = "-";
+                    refreshsaves();
+                    if (savelist.Items.Count == 0)
+                    {
+                        MessageBox.Show("It seems it's the first time you are using NMS Saves Manager. Please create a new profile. NMS Saves Manager will then transfer your actual DefaultUser to this profile", "Welcome to NMS Saves Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        isfirstprofile = true;
+                    }
+                }   
+            }
+            if (Globals.isgog == false)
+            {
+                string lastloadedsteam = NMSpath + @"\" + Globals.steamID;            
+                string last= System.IO.File.ReadAllText(lastloadedsteam);
 
-                if (Directory.Exists(savepath + "DeleteThisProfile"))
+                if (last != "" && last != "st_"+Globals.steamID && last != "DeleteThisProfile")
                 {
-                    string deleteit = savepath + "DeleteThisProfile";
-                    Directory.Delete((deleteit), true);
+                    string lastloaded = System.IO.File.ReadAllText(lastloadedsteam);
+                    string loaded = System.IO.File.ReadAllText(lastloadedsteam);
+                    string profil = System.IO.File.ReadAllText(lastloadedsteam);
+                    string profilsave = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + Globals.steamID + "_" + profil);
+                    string defaultuser = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "st_" + Globals.steamID);
+
+                    if (!Directory.Exists(defaultuser))
+                    {
+                        MessageBox.Show("No DefaultUser found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                    if (Directory.Exists(profilsave))
+                    {
+                        Directory.Delete((profilsave), true);
+                        System.Threading.Thread.Sleep(500);
+                        Directory.CreateDirectory(profilsave);
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(profilsave);                       
+                    }
+
+                    //Now Create all of the directories
+                    foreach (string dirPath in Directory.GetDirectories(defaultuser, "*", SearchOption.AllDirectories))
+                        Directory.CreateDirectory(dirPath.Replace(defaultuser, profilsave));
+
+                    //Copy all the files & Replaces any files with the same name
+                    foreach (string newPath in Directory.GetFiles(defaultuser, "*.*", SearchOption.AllDirectories))
+                        File.Copy(newPath, newPath.Replace(defaultuser, profilsave), true);
+
+                    if (Directory.Exists(savepath + "DeleteThisProfile"))
+                    {
+                        Directory.Delete((savepath + "DeleteThisProfile"), true);
+                    }
+
+                    lastsession.Text = lastloaded;
+                    actload.Text = "-";
+                    refreshsaves();
                 }
-   
-                lastsession.Text = lastloaded;
-                actload.Text = "-";
-                refreshsaves();
                 if (savelist.Items.Count == 0)
                 {
                     MessageBox.Show("It seems it's the first time you are using NMS Saves Manager. Please create a new profile. NMS Saves Manager will then transfer your actual DefaultUser to this profile", "Welcome to NMS Saves Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     isfirstprofile = true;
                 }
             }
+            refreshsaves();
         }
 
     private void button2_Click(object sender, EventArgs e)
@@ -168,54 +255,113 @@ namespace NMS_Saves_Manager
             {
                 if (isfirstprofile == true)
                 {
-                    var folder = Directory.CreateDirectory(savepath + "\\" + newsavename);
-                    textBox1.Enabled = false;
-                    newsaveok.Enabled = false;
-                    string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
-                    string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + newsavename);
-
-
-                    //Now Create all of the directories
-                    foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
-                        Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
-
-                    //Copy all the files & Replaces any files with the same name
-                    foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
-                        File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
-                    refreshsaves();
-                    MessageBox.Show("Welcome " + newsavename + " ! If you already had multiple saves, you can either rename them manually and refresh the NMS Saves Manager profiles list or create new profiles and copy your backups in newly created folders", "NMS Saves Manager: Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    var folder = Directory.CreateDirectory(savepath + @"\" + newsavename);
-                    textBox1.Enabled = false;
-                    newsaveok.Enabled = false;
-                    string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
-                    string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile + "_old");
-
-                    if (Directory.Exists(destinationpath))
+                    if (Globals.isgog == true)
                     {
-                        Directory.Delete(destinationpath, true);
-                    }
+                        var folder = Directory.CreateDirectory(savepath + "\\" + newsavename);
+                        textBox1.Enabled = false;
+                        newsaveok.Enabled = false;
+                        string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
+                        string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + newsavename);
 
-                    if (Directory.Exists(sourcepath))
-                    {
-                        Directory.Delete(sourcepath, true);
-                        Directory.CreateDirectory(sourcepath);
+
+                        //Now Create all of the directories
+                        foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
+                            Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+
+                        //Copy all the files & Replaces any files with the same name
+                        foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
+                            File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
+                        refreshsaves();
+                        MessageBox.Show("Welcome " + newsavename + " ! If you already had multiple saves, you can either rename them manually and refresh the NMS Saves Manager profiles list or create new profiles and copy your backups in newly created folders", "NMS Saves Manager: Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        Directory.CreateDirectory(sourcepath);
+                        string newsavesteam = Globals.steamID + "_" + newsavename;
+                        var folder = Directory.CreateDirectory(savepath + "\\" + newsavesteam);
+                        textBox1.Enabled = false;
+                        newsaveok.Enabled = false;
+                        string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "st_" + Globals.steamID);
+                        string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + newsavesteam);
+
+
+                        //Now Create all of the directories
+                        foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
+                            Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+
+                        //Copy all the files & Replaces any files with the same name
+                        foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
+                            File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
+                        refreshsaves();
+                        MessageBox.Show("Welcome " + newsavename + " ! If you already had multiple saves, you can either rename them manually and refresh the NMS Saves Manager profiles list or create new profiles and copy your backups in newly created folders", "NMS Saves Manager: Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                }
+                else
+                {
+                    if (Globals.isgog == true)
+                    {
+                        var folder = Directory.CreateDirectory(savepath + @"\" + newsavename);
+                        textBox1.Enabled = false;
+                        newsaveok.Enabled = false;
+                        string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
+                        string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile + "_old");
 
-                    //Now Create all of the directories
-                    foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
-                        Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+                        if (Directory.Exists(destinationpath))
+                        {
+                            Directory.Delete(destinationpath, true);
+                        }
 
-                    //Copy all the files & Replaces any files with the same name
-                    foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
-                        File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
-                    refreshsaves();
+                        if (Directory.Exists(sourcepath))
+                        {
+                            Directory.Delete(sourcepath, true);
+                            Directory.CreateDirectory(sourcepath);
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(sourcepath);
+                        }
+
+                        //Now Create all of the directories
+                        foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
+                            Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+
+                        //Copy all the files & Replaces any files with the same name
+                        foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
+                            File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
+                        refreshsaves();
+                    }
+                    else
+                    {
+                        string newsavesteam = Globals.steamID + "_" + newsavename;
+                        var folder = Directory.CreateDirectory(savepath + "\\" + newsavesteam);
+                        textBox1.Enabled = false;
+                        newsaveok.Enabled = false;
+                        string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "st_" + Globals.steamID);
+                        string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + Globals.steamID + "_" + userprofile + "_old");
+
+                        if (Directory.Exists(destinationpath))
+                        {
+                            Directory.Delete(destinationpath, true);
+                        }
+
+                        if (Directory.Exists(sourcepath))
+                        {
+                            Directory.Delete(sourcepath, true);
+                            Directory.CreateDirectory(sourcepath);
+                        }
+                        else
+                        {
+                            Directory.CreateDirectory(sourcepath);
+                        }
+
+                        //Now Create all of the directories
+                        foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
+                            Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+
+                        //Copy all the files & Replaces any files with the same name
+                        foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
+                            File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
+                        refreshsaves();
+                    }
 
                 }
                 refreshsaves();
@@ -251,47 +397,103 @@ namespace NMS_Saves_Manager
 
         private void copypast()
         {
-            string curitem = savelist.SelectedItem.ToString();
-            string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem);
-            string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem + "_old");
-
-            if (Directory.Exists(destinationpath))
+            if (Globals.isgog == true)
             {
-                Directory.Delete(destinationpath, true);
-                Directory.CreateDirectory(destinationpath);
-            }
-            else
-            {
-                Directory.CreateDirectory(destinationpath);
-            }
-            
-            //Now Create all of the directories
-            foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
-            Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+                string curitem = savelist.SelectedItem.ToString();
+                string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem);
+                string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem + "_old");
 
-            //Copy all the files & Replaces any files with the same name
-            foreach (string newPath in Directory.GetFiles(sourcepath, "*.*",SearchOption.AllDirectories))
-            File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
-        }
-
-        private void deletefolder()
-        {
-            if (onloadprofil == true)
-            {
-                string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + profiltoload + "_old");
                 if (Directory.Exists(destinationpath))
                 {
                     Directory.Delete(destinationpath, true);
+                    System.Threading.Thread.Sleep(500);
+                    Directory.CreateDirectory(destinationpath);
                 }
+                else
+                {
+                    Directory.CreateDirectory(destinationpath);
+                }
+
+                //Now Create all of the directories
+                foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
+                    Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+
+                //Copy all the files & Replaces any files with the same name
+                foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
+                    File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
             }
             else
             {
                 string curitem = savelist.SelectedItem.ToString();
-                string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem + "_old");
-                string defaultpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
+                string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + Globals.steamID + "_" + curitem);
+                string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + Globals.steamID + "_" + curitem + "_old");
+
                 if (Directory.Exists(destinationpath))
                 {
-                    Directory.Delete(destinationpath, true);                    
+                    Directory.Delete(destinationpath, true);
+                    System.Threading.Thread.Sleep(500);
+                    Directory.CreateDirectory(destinationpath);
+                }
+                else
+                {
+                    Directory.CreateDirectory(destinationpath);
+                }
+
+                //Now Create all of the directories
+                foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
+                    Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+
+                //Copy all the files & Replaces any files with the same name
+                foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
+                    File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
+            }
+
+        }
+
+        private void deletefolder()
+        {
+            if (Globals.isgog == true)
+            {
+                if (onloadprofil == true)
+                {
+                    string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + profiltoload + "_old");
+                    if (Directory.Exists(destinationpath))
+                    {
+                        Directory.Delete(destinationpath, true);
+                    }
+                }
+                else
+                {
+                    string curitem = savelist.SelectedItem.ToString();
+                    string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem + "_old");
+                    string defaultpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
+                    if (Directory.Exists(destinationpath))
+                    {
+                        Directory.Delete(destinationpath, true);
+                    }
+                }
+            }
+            else
+            {
+                {
+                    if (onloadprofil == true)
+                    {
+                        string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + Globals.steamID + "_" + profiltoload + "_old");
+                        if (Directory.Exists(destinationpath))
+                        {
+                            Directory.Delete(destinationpath, true);
+                        }
+                    }
+                    else
+                    {
+                        string curitem = savelist.SelectedItem.ToString();
+                        string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + Globals.steamID + "_" + curitem + "_old");
+                        string defaultpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "st_" + Globals.steamID);
+                        if (Directory.Exists(destinationpath))
+                        {
+                            Directory.Delete(destinationpath, true);
+                        }
+                    }
                 }
             }
             onloadprofil = false;
@@ -306,11 +508,15 @@ namespace NMS_Saves_Manager
 
             foreach (DirectoryInfo file in Files)
                 {
-                    if (!file.Name.Contains(userprofile) && !file.Name.Contains("_old") && !file.Name.Contains("st_"))
+                    if (Globals.isgog == true && !file.Name.Contains(userprofile) && !file.Name.Contains("_old") && !file.Name.Contains("st_"))
                     {
                         savelist.Items.Add(file.Name);                    
+                    }
+                    if (Globals.isgog == false && file.Name.Contains(Globals.steamID) && !file.Name.Contains("st_") && !file.Name.Contains("_old"))
+                    {
+                    savelist.Items.Add(file.Name.Replace(Globals.steamID + "_", ""));
+                    }
                 }
-        }
         }//Refresh saves list
 
         private void checkbkpauto_CheckedChanged(object sender, EventArgs e)
@@ -333,90 +539,145 @@ namespace NMS_Saves_Manager
             }
             else
             {
-                string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
-                string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile + "_old");
-                onloadprofil = true;
-
-                if (Directory.Exists(destinationpath))
+                if (Globals.isgog == true)
                 {
-                    Directory.Delete(destinationpath, true);
-                    Directory.CreateDirectory(destinationpath);
+                    string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
+                    string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile + "_old");
+                    onloadprofil = true;
+
+                    if (Directory.Exists(destinationpath))
+                    {
+                        Directory.Delete(destinationpath, true);
+                        System.Threading.Thread.Sleep(500);
+                        Directory.CreateDirectory(destinationpath);
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(destinationpath);
+                    }
+
+                    //Now Create all of the directories
+                    foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
+                        Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+
+                    //Copy all the files & Replaces any files with the same name
+                    foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
+                        File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
+
+                    Directory.Delete(sourcepath, true);
+                    Directory.CreateDirectory(sourcepath);
                 }
                 else
                 {
-                    Directory.CreateDirectory(destinationpath);
+                    string sourcepath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "st_" + Globals.steamID);
+                    string destinationpath = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "st_" + Globals.steamID + "_old");
+                    onloadprofil = true;
+
+                    if (Directory.Exists(destinationpath))
+                    {
+                        Directory.Delete(destinationpath, true);
+                        System.Threading.Thread.Sleep(500);
+                        Directory.CreateDirectory(destinationpath);
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(destinationpath);
+                    }
+
+                    //Now Create all of the directories
+                    foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
+                        Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
+
+                    //Copy all the files & Replaces any files with the same name
+                    foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
+                        File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
+
+                    Directory.Delete(sourcepath, true);
+                    Directory.CreateDirectory(sourcepath);
                 }
-
-                //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(sourcepath, "*", SearchOption.AllDirectories))
-                    Directory.CreateDirectory(dirPath.Replace(sourcepath, destinationpath));
-
-                //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(sourcepath, "*.*", SearchOption.AllDirectories))
-                    File.Copy(newPath, newPath.Replace(sourcepath, destinationpath), true);
-
-                Directory.Delete(sourcepath, true);
-                Directory.CreateDirectory(sourcepath);
-
-                string curitem = savelist.SelectedItem.ToString();
-                string sourcenew = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem);
-                string destinationnew = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
-                profiltoload = curitem; 
+                             
+                if (Globals.isgog == true)
+                {
+                    string curitem = savelist.SelectedItem.ToString();
+                    string sourcenew = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + curitem);
+                    string destinationnew = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
+                    profiltoload = curitem;
 
 
-                //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(sourcenew, "*", SearchOption.AllDirectories))
+                    //Now Create all of the directories
+                    foreach (string dirPath in Directory.GetDirectories(sourcenew, "*", SearchOption.AllDirectories))
                     Directory.CreateDirectory(dirPath.Replace(sourcenew, destinationnew));
 
-                //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(sourcenew, "*.*", SearchOption.AllDirectories))
+                    //Copy all the files & Replaces any files with the same name
+                    foreach (string newPath in Directory.GetFiles(sourcenew, "*.*", SearchOption.AllDirectories))
                     File.Copy(newPath, newPath.Replace(sourcenew, destinationnew), true);
 
-                lastloaded = curitem;
-                refreshsaves();
-                
-                actload.Text = lastloaded;
-                loaded = lastloaded;
-                System.IO.File.WriteAllText(lastloadedstorage, loaded);
-                autobackupdelay = trackBar1.Value;
+                    lastloaded = curitem;
+                    refreshsaves();
+                    actload.Text = lastloaded;
+                    loaded = lastloaded;
+                    System.IO.File.WriteAllText(lastloadedstorage, loaded);
+                    autobackupdelay = trackBar1.Value;     
+                }
+                else
+                {
+                    string curitem = savelist.SelectedItem.ToString();
+                    string sourcenew = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + Globals.steamID + "_" + curitem);
+                    string destinationnew = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "st_" + Globals.steamID);
+                    profiltoload = curitem;
+                    
+                    //Now Create all of the directories
+                    foreach (string dirPath in Directory.GetDirectories(sourcenew, "*", SearchOption.AllDirectories))
+                        Directory.CreateDirectory(dirPath.Replace(sourcenew, destinationnew));
+
+                    //Copy all the files & Replaces any files with the same name
+                    foreach (string newPath in Directory.GetFiles(sourcenew, "*.*", SearchOption.AllDirectories))
+                        File.Copy(newPath, newPath.Replace(sourcenew, destinationnew), true);
+
+                    lastloaded = curitem;
+                    refreshsaves();
+
+                    string lastloadedsteam = NMSpath + @"\" + Globals.steamID;
+                    actload.Text = lastloaded;
+                    loaded = lastloaded;
+                    System.IO.File.WriteAllText(lastloadedsteam, loaded);
+                    autobackupdelay = trackBar1.Value;
+                }
 
                 if ((autobackupdelay != 0) && (checkbkpauto.Checked == true))
                 {
-                    var timer = new System.Threading.Timer(
-                    f => autobackup(),
-                    null,
-                    TimeSpan.Zero,
-                    TimeSpan.FromMinutes(autobackupdelay));
-
-
+                 
                     if ((File.Exists(NMSextpath)) && (useNMSe.Checked == true))
                     {
-                        Process.Start(NMSextpath);
+                        //    Process.Start(NMSextpath);
+                        var timer = new System.Threading.Timer(
+                        f => autobackup(),
+                        null,
+                        TimeSpan.Zero,
+                        TimeSpan.FromMinutes(autobackupdelay));
                         System.Threading.Thread.Sleep(5000);
                     }
                     else
                     {
-                            Process.Start(NMSpathexe);
+                        var timer = new System.Threading.Timer(
+                        f => autobackup(),
+                        null,
+                        TimeSpan.Zero,
+                        TimeSpan.FromMinutes(autobackupdelay));
+                        //    Process.Start(NMSpathexe);
                     }
-
-                    var timer2 = new System.Threading.Timer(
-                   t => testNMSrunning(),
-                    null,
-                    TimeSpan.Zero,
-                    TimeSpan.FromSeconds(2));
-
                     doautoqwerty();
                 }
                 else
                 {
                     if ((File.Exists(NMSextpath)) && (useNMSe.Checked == true))
                     {
-                        System.Diagnostics.Process.Start(NMSextpath);
+                     //   System.Diagnostics.Process.Start(NMSextpath);
                         System.Threading.Thread.Sleep(5000);
                     }
                     else
                     {
-                            System.Diagnostics.Process.Start(NMSpathexe);
+                      //      System.Diagnostics.Process.Start(NMSpathexe);
                     }
                     doautoqwerty();
                     System.Windows.Forms.Application.Exit();
@@ -427,24 +688,58 @@ namespace NMS_Saves_Manager
         }
         private void autobackup()
         {
-            string profil = System.IO.File.ReadAllText(lastloadedstorage);
-            string profilsave = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + profil);
-            string defaultuser = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
-
-            if (Directory.Exists(profilsave))
+            if (Globals.isgog == true)
             {
-                Directory.Delete(profilsave, true);
-                Directory.CreateDirectory(profilsave);
+                string profil = System.IO.File.ReadAllText(lastloadedstorage);
+                string profilsave = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + profil);
+                string defaultuser = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + userprofile);
+
+                if (Directory.Exists(profilsave))
+                {
+                    Directory.Delete(profilsave, true);
+                    Directory.CreateDirectory(profilsave);
+                }
+                else
+                {           
+                    Directory.CreateDirectory(profilsave);
+                }
+
+
+                //Now Create all of the directories
+                foreach (string dirPath in Directory.GetDirectories(defaultuser, "*", SearchOption.AllDirectories))
+                    Directory.CreateDirectory(dirPath.Replace(defaultuser, profilsave));
+
+                //Copy all the files & Replaces any files with the same name
+                foreach (string newPath in Directory.GetFiles(defaultuser, "*.*", SearchOption.AllDirectories))
+                    File.Copy(newPath, newPath.Replace(defaultuser, profilsave), true);
             }
+            else
+            {
+                string lastloadedsteam = NMSpath + @"\" + Globals.steamID;
+                string profil = System.IO.File.ReadAllText(lastloadedsteam);
+                string profilsave = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + Globals.steamID + "_" + profil);
+                string defaultuser = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + nmsprofilefolder + "st_" + Globals.steamID);
 
- 
-            //Now Create all of the directories
-            foreach (string dirPath in Directory.GetDirectories(defaultuser, "*", SearchOption.AllDirectories))
-                Directory.CreateDirectory(dirPath.Replace(defaultuser, profilsave));
+                if (Directory.Exists(profilsave))
+                {
+                    Directory.Delete(profilsave, true);
+                    System.Threading.Thread.Sleep(500);
+                    Directory.CreateDirectory(profilsave);
+                }
+                else
+                {
+                    Directory.CreateDirectory(profilsave);
+                }
 
-            //Copy all the files & Replaces any files with the same name
-            foreach (string newPath in Directory.GetFiles(defaultuser, "*.*", SearchOption.AllDirectories))
-                File.Copy(newPath, newPath.Replace(defaultuser, profilsave), true);      
+                //Now Create all of the directories
+                foreach (string dirPath in Directory.GetDirectories(defaultuser, "*", SearchOption.AllDirectories))
+                    Directory.CreateDirectory(dirPath.Replace(defaultuser, profilsave));
+
+                //Copy all the files & Replaces any files with the same name
+                foreach (string newPath in Directory.GetFiles(defaultuser, "*.*", SearchOption.AllDirectories))
+                    File.Copy(newPath, newPath.Replace(defaultuser, profilsave), true);
+
+            }
         }
 
         private void savelist_SelectedIndexChanged(object sender, EventArgs e)
@@ -494,6 +789,10 @@ namespace NMS_Saves_Manager
                 MessageBox.Show(String.Format("It's seems to be the first time you want to use mods or mods folder from NMS:SM. Please unzip all your .pak mods in "+ modstoragepath +" from now !", "NMS"), "NMS Saves Manager: Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Directory.CreateDirectory(modstoragepath);
             }
+            if (!Directory.Exists(NMSEpath))
+            {
+                Directory.CreateDirectory(NMSEpath);
+            }
             System.Diagnostics.Process.Start(modstoragepath);            
         }
 
@@ -525,6 +824,12 @@ namespace NMS_Saves_Manager
                 }
         }
     }
+    public static class Globals
+    {
+        public static Boolean isgog = true;
+        public static String steamID = "";
+    }
+
     public enum GameVersionsEnum
     {
         GOG,
