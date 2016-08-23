@@ -28,98 +28,89 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.useNMSe = new System.Windows.Forms.CheckBox();
-            this.modssettings = new System.Windows.Forms.Button();
-            this.gamesettings = new System.Windows.Forms.Button();
-            this.openmods = new System.Windows.Forms.Button();
-            this.openbinaries = new System.Windows.Forms.Button();
-            this.actloaded = new System.Windows.Forms.Label();
+            this.CKB_UseNMSE = new System.Windows.Forms.CheckBox();
+            this.BTN_ModSettings = new System.Windows.Forms.Button();
+            this.BTN_GameSettings = new System.Windows.Forms.Button();
+            this.BTN_OpenModsFolder = new System.Windows.Forms.Button();
+            this.BTN_OpenBinariesFolder = new System.Windows.Forms.Button();
             this.LBL_CurrentProfile = new System.Windows.Forms.Label();
             this.LBL_LastProfileLoaded = new System.Windows.Forms.Label();
-            this.helplabel = new System.Windows.Forms.Label();
-            this.checkautoqwerty = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.labelregle = new System.Windows.Forms.Label();
-            this.checkbkpauto = new System.Windows.Forms.CheckBox();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.loadsave = new System.Windows.Forms.Button();
-            this.savecopy = new System.Windows.Forms.Button();
-            this.refreshlist = new System.Windows.Forms.Button();
-            this.newsaveok = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.savelist = new System.Windows.Forms.ListBox();
-            this.savefolder = new System.Windows.Forms.Button();
-            this.newsave = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.LBL_Label_LastSession = new System.Windows.Forms.Label();
+            this.CKB_AutoQWERTY = new System.Windows.Forms.CheckBox();
+            this.LBL_25MIN = new System.Windows.Forms.Label();
+            this.LBL_20MIN = new System.Windows.Forms.Label();
+            this.LBL_15MIN = new System.Windows.Forms.Label();
+            this.LBL_10MIN = new System.Windows.Forms.Label();
+            this.LBL_5MIN = new System.Windows.Forms.Label();
+            this.CKB_AutoBackUp = new System.Windows.Forms.CheckBox();
+            this.TBR_AutoSave = new System.Windows.Forms.TrackBar();
+            this.BTN_LoadProfile = new System.Windows.Forms.Button();
+            this.BTN_BackUp = new System.Windows.Forms.Button();
+            this.BTN_RefreshListProfile = new System.Windows.Forms.Button();
+            this.LTB_ProfilesList = new System.Windows.Forms.ListBox();
+            this.BTN_OpenSavesFolder = new System.Windows.Forms.Button();
+            this.BTN_NewProfile = new System.Windows.Forms.Button();
+            this.TLP_LabelInfoSession = new System.Windows.Forms.TableLayoutPanel();
+            this.LBL_Label_CurrentSession = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.TBR_AutoSave)).BeginInit();
+            this.TLP_LabelInfoSession.SuspendLayout();
             this.SuspendLayout();
             // 
-            // useNMSe
+            // CKB_UseNMSE
             // 
-            this.useNMSe.AccessibleDescription = "";
-            this.useNMSe.AutoSize = true;
-            this.useNMSe.Location = new System.Drawing.Point(282, 253);
-            this.useNMSe.Name = "useNMSe";
-            this.useNMSe.Size = new System.Drawing.Size(116, 17);
-            this.useNMSe.TabIndex = 48;
-            this.useNMSe.Tag = "";
-            this.useNMSe.Text = "Use NMS extender";
-            this.useNMSe.UseVisualStyleBackColor = true;
+            this.CKB_UseNMSE.AccessibleDescription = "";
+            this.CKB_UseNMSE.AutoSize = true;
+            this.CKB_UseNMSE.Location = new System.Drawing.Point(282, 253);
+            this.CKB_UseNMSE.Name = "CKB_UseNMSE";
+            this.CKB_UseNMSE.Size = new System.Drawing.Size(116, 17);
+            this.CKB_UseNMSE.TabIndex = 48;
+            this.CKB_UseNMSE.Tag = "";
+            this.CKB_UseNMSE.Text = "Use NMS extender";
+            this.CKB_UseNMSE.UseVisualStyleBackColor = true;
             // 
-            // modssettings
+            // BTN_ModSettings
             // 
-            this.modssettings.Location = new System.Drawing.Point(246, 320);
-            this.modssettings.Name = "modssettings";
-            this.modssettings.Size = new System.Drawing.Size(135, 38);
-            this.modssettings.TabIndex = 47;
-            this.modssettings.Text = "Mods Settings";
-            this.modssettings.UseVisualStyleBackColor = true;
+            this.BTN_ModSettings.Location = new System.Drawing.Point(246, 320);
+            this.BTN_ModSettings.Name = "BTN_ModSettings";
+            this.BTN_ModSettings.Size = new System.Drawing.Size(135, 38);
+            this.BTN_ModSettings.TabIndex = 47;
+            this.BTN_ModSettings.Text = "Mods Settings";
+            this.BTN_ModSettings.UseVisualStyleBackColor = true;
             // 
-            // gamesettings
+            // BTN_GameSettings
             // 
-            this.gamesettings.Location = new System.Drawing.Point(246, 276);
-            this.gamesettings.Name = "gamesettings";
-            this.gamesettings.Size = new System.Drawing.Size(135, 38);
-            this.gamesettings.TabIndex = 46;
-            this.gamesettings.Text = "Game Settings";
-            this.gamesettings.UseVisualStyleBackColor = true;
+            this.BTN_GameSettings.Location = new System.Drawing.Point(246, 276);
+            this.BTN_GameSettings.Name = "BTN_GameSettings";
+            this.BTN_GameSettings.Size = new System.Drawing.Size(135, 38);
+            this.BTN_GameSettings.TabIndex = 46;
+            this.BTN_GameSettings.Text = "Game Settings";
+            this.BTN_GameSettings.UseVisualStyleBackColor = true;
             // 
-            // openmods
+            // BTN_OpenModsFolder
             // 
-            this.openmods.Location = new System.Drawing.Point(16, 315);
-            this.openmods.Name = "openmods";
-            this.openmods.Size = new System.Drawing.Size(135, 24);
-            this.openmods.TabIndex = 45;
-            this.openmods.Text = "Open Mods Folder";
-            this.openmods.UseVisualStyleBackColor = true;
-            this.openmods.Click += new System.EventHandler(this.openmods_Click);
+            this.BTN_OpenModsFolder.Location = new System.Drawing.Point(16, 315);
+            this.BTN_OpenModsFolder.Name = "BTN_OpenModsFolder";
+            this.BTN_OpenModsFolder.Size = new System.Drawing.Size(135, 24);
+            this.BTN_OpenModsFolder.TabIndex = 45;
+            this.BTN_OpenModsFolder.Text = "Open Mods Folder";
+            this.BTN_OpenModsFolder.UseVisualStyleBackColor = true;
+            this.BTN_OpenModsFolder.Click += new System.EventHandler(this.BTN_OpenModsFolder_Click);
             // 
-            // openbinaries
+            // BTN_OpenBinariesFolder
             // 
-            this.openbinaries.Location = new System.Drawing.Point(16, 283);
-            this.openbinaries.Name = "openbinaries";
-            this.openbinaries.Size = new System.Drawing.Size(135, 24);
-            this.openbinaries.TabIndex = 44;
-            this.openbinaries.Text = "Open Binaries Folder";
-            this.openbinaries.UseVisualStyleBackColor = true;
-            this.openbinaries.Click += new System.EventHandler(this.openbinaries_Click);
-            // 
-            // actloaded
-            // 
-            this.actloaded.AutoSize = true;
-            this.actloaded.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.actloaded.Location = new System.Drawing.Point(91, 322);
-            this.actloaded.Name = "actloaded";
-            this.actloaded.Size = new System.Drawing.Size(0, 12);
-            this.actloaded.TabIndex = 43;
+            this.BTN_OpenBinariesFolder.Location = new System.Drawing.Point(16, 283);
+            this.BTN_OpenBinariesFolder.Name = "BTN_OpenBinariesFolder";
+            this.BTN_OpenBinariesFolder.Size = new System.Drawing.Size(135, 24);
+            this.BTN_OpenBinariesFolder.TabIndex = 44;
+            this.BTN_OpenBinariesFolder.Text = "Open Binaries Folder";
+            this.BTN_OpenBinariesFolder.UseVisualStyleBackColor = true;
+            this.BTN_OpenBinariesFolder.Click += new System.EventHandler(this.BTN_OpenBinariesFolder_Click);
             // 
             // LBL_CurrentProfile
             // 
             this.LBL_CurrentProfile.AutoSize = true;
             this.LBL_CurrentProfile.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBL_CurrentProfile.Location = new System.Drawing.Point(91, 387);
+            this.LBL_CurrentProfile.Location = new System.Drawing.Point(96, 18);
             this.LBL_CurrentProfile.Name = "LBL_CurrentProfile";
             this.LBL_CurrentProfile.Size = new System.Drawing.Size(0, 12);
             this.LBL_CurrentProfile.TabIndex = 42;
@@ -128,212 +119,218 @@
             // 
             this.LBL_LastProfileLoaded.AutoSize = true;
             this.LBL_LastProfileLoaded.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBL_LastProfileLoaded.Location = new System.Drawing.Point(91, 363);
+            this.LBL_LastProfileLoaded.Location = new System.Drawing.Point(96, 0);
             this.LBL_LastProfileLoaded.Name = "LBL_LastProfileLoaded";
             this.LBL_LastProfileLoaded.Size = new System.Drawing.Size(0, 12);
             this.LBL_LastProfileLoaded.TabIndex = 41;
             // 
-            // helplabel
+            // LBL_Label_LastSession
             // 
-            this.helplabel.AutoSize = true;
-            this.helplabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.helplabel.Location = new System.Drawing.Point(14, 363);
-            this.helplabel.Name = "helplabel";
-            this.helplabel.Size = new System.Drawing.Size(71, 36);
-            this.helplabel.TabIndex = 40;
-            this.helplabel.Text = "Last session:    \r\n\r\nActually loaded:";
+            this.LBL_Label_LastSession.AutoSize = true;
+            this.LBL_Label_LastSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_Label_LastSession.Location = new System.Drawing.Point(3, 0);
+            this.LBL_Label_LastSession.Name = "LBL_Label_LastSession";
+            this.LBL_Label_LastSession.Size = new System.Drawing.Size(60, 12);
+            this.LBL_Label_LastSession.TabIndex = 40;
+            this.LBL_Label_LastSession.Text = "Last session:";
             // 
-            // checkautoqwerty
+            // CKB_AutoQWERTY
             // 
-            this.checkautoqwerty.AccessibleDescription = "";
-            this.checkautoqwerty.AutoSize = true;
-            this.checkautoqwerty.Location = new System.Drawing.Point(282, 231);
-            this.checkautoqwerty.Name = "checkautoqwerty";
-            this.checkautoqwerty.Size = new System.Drawing.Size(99, 17);
-            this.checkautoqwerty.TabIndex = 39;
-            this.checkautoqwerty.Tag = "";
-            this.checkautoqwerty.Text = "Auto QWERTY";
-            this.checkautoqwerty.UseVisualStyleBackColor = true;
+            this.CKB_AutoQWERTY.AccessibleDescription = "";
+            this.CKB_AutoQWERTY.AutoSize = true;
+            this.CKB_AutoQWERTY.Location = new System.Drawing.Point(282, 231);
+            this.CKB_AutoQWERTY.Name = "CKB_AutoQWERTY";
+            this.CKB_AutoQWERTY.Size = new System.Drawing.Size(99, 17);
+            this.CKB_AutoQWERTY.TabIndex = 39;
+            this.CKB_AutoQWERTY.Tag = "";
+            this.CKB_AutoQWERTY.Text = "Auto QWERTY";
+            this.CKB_AutoQWERTY.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // LBL_25MIN
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(243, 184);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 13);
-            this.label4.TabIndex = 37;
-            this.label4.Text = "25 min";
+            this.LBL_25MIN.AutoSize = true;
+            this.LBL_25MIN.Location = new System.Drawing.Point(243, 184);
+            this.LBL_25MIN.Name = "LBL_25MIN";
+            this.LBL_25MIN.Size = new System.Drawing.Size(38, 13);
+            this.LBL_25MIN.TabIndex = 37;
+            this.LBL_25MIN.Text = "25 min";
             // 
-            // label3
+            // LBL_20MIN
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(196, 184);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(19, 13);
-            this.label3.TabIndex = 38;
-            this.label3.Text = "20";
+            this.LBL_20MIN.AutoSize = true;
+            this.LBL_20MIN.Location = new System.Drawing.Point(196, 184);
+            this.LBL_20MIN.Name = "LBL_20MIN";
+            this.LBL_20MIN.Size = new System.Drawing.Size(19, 13);
+            this.LBL_20MIN.TabIndex = 38;
+            this.LBL_20MIN.Text = "20";
             // 
-            // label2
+            // LBL_15MIN
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(149, 184);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(19, 13);
-            this.label2.TabIndex = 36;
-            this.label2.Text = "15";
+            this.LBL_15MIN.AutoSize = true;
+            this.LBL_15MIN.Location = new System.Drawing.Point(149, 184);
+            this.LBL_15MIN.Name = "LBL_15MIN";
+            this.LBL_15MIN.Size = new System.Drawing.Size(19, 13);
+            this.LBL_15MIN.TabIndex = 36;
+            this.LBL_15MIN.Text = "15";
             // 
-            // label1
+            // LBL_10MIN
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(102, 184);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(19, 13);
-            this.label1.TabIndex = 35;
-            this.label1.Text = "10";
+            this.LBL_10MIN.AutoSize = true;
+            this.LBL_10MIN.Location = new System.Drawing.Point(102, 184);
+            this.LBL_10MIN.Name = "LBL_10MIN";
+            this.LBL_10MIN.Size = new System.Drawing.Size(19, 13);
+            this.LBL_10MIN.TabIndex = 35;
+            this.LBL_10MIN.Text = "10";
             // 
-            // labelregle
+            // LBL_5MIN
             // 
-            this.labelregle.AutoSize = true;
-            this.labelregle.Location = new System.Drawing.Point(59, 184);
-            this.labelregle.Name = "labelregle";
-            this.labelregle.Size = new System.Drawing.Size(13, 13);
-            this.labelregle.TabIndex = 34;
-            this.labelregle.Text = "5";
+            this.LBL_5MIN.AutoSize = true;
+            this.LBL_5MIN.Location = new System.Drawing.Point(59, 184);
+            this.LBL_5MIN.Name = "LBL_5MIN";
+            this.LBL_5MIN.Size = new System.Drawing.Size(13, 13);
+            this.LBL_5MIN.TabIndex = 34;
+            this.LBL_5MIN.Text = "5";
             // 
-            // checkbkpauto
+            // CKB_AutoBackUp
             // 
-            this.checkbkpauto.AutoSize = true;
-            this.checkbkpauto.Checked = true;
-            this.checkbkpauto.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkbkpauto.Location = new System.Drawing.Point(282, 209);
-            this.checkbkpauto.Name = "checkbkpauto";
-            this.checkbkpauto.Size = new System.Drawing.Size(90, 17);
-            this.checkbkpauto.TabIndex = 32;
-            this.checkbkpauto.Text = "Backup auto.";
-            this.checkbkpauto.UseVisualStyleBackColor = true;
+            this.CKB_AutoBackUp.AutoSize = true;
+            this.CKB_AutoBackUp.Checked = true;
+            this.CKB_AutoBackUp.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CKB_AutoBackUp.Location = new System.Drawing.Point(282, 209);
+            this.CKB_AutoBackUp.Name = "CKB_AutoBackUp";
+            this.CKB_AutoBackUp.Size = new System.Drawing.Size(90, 17);
+            this.CKB_AutoBackUp.TabIndex = 32;
+            this.CKB_AutoBackUp.Text = "Backup auto.";
+            this.CKB_AutoBackUp.UseVisualStyleBackColor = true;
+            this.CKB_AutoBackUp.CheckedChanged += new System.EventHandler(this.CKB_AutoBackUp_CheckedChanged);
             // 
-            // trackBar1
+            // TBR_AutoSave
             // 
-            this.trackBar1.Location = new System.Drawing.Point(5, 196);
-            this.trackBar1.Maximum = 25;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(259, 45);
-            this.trackBar1.SmallChange = 5;
-            this.trackBar1.TabIndex = 33;
-            this.trackBar1.TickFrequency = 5;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBar1.Value = 15;
+            this.TBR_AutoSave.Enabled = false;
+            this.TBR_AutoSave.Location = new System.Drawing.Point(5, 196);
+            this.TBR_AutoSave.Maximum = 25;
+            this.TBR_AutoSave.Name = "TBR_AutoSave";
+            this.TBR_AutoSave.Size = new System.Drawing.Size(259, 45);
+            this.TBR_AutoSave.SmallChange = 5;
+            this.TBR_AutoSave.TabIndex = 33;
+            this.TBR_AutoSave.TickFrequency = 5;
+            this.TBR_AutoSave.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.TBR_AutoSave.Value = 15;
             // 
-            // loadsave
+            // BTN_LoadProfile
             // 
-            this.loadsave.Location = new System.Drawing.Point(246, 364);
-            this.loadsave.Name = "loadsave";
-            this.loadsave.Size = new System.Drawing.Size(135, 38);
-            this.loadsave.TabIndex = 31;
-            this.loadsave.Text = "Load Profile";
-            this.loadsave.UseVisualStyleBackColor = true;
-            this.loadsave.Click += new System.EventHandler(this.loadsave_Click);
+            this.BTN_LoadProfile.Location = new System.Drawing.Point(246, 364);
+            this.BTN_LoadProfile.Name = "BTN_LoadProfile";
+            this.BTN_LoadProfile.Size = new System.Drawing.Size(135, 38);
+            this.BTN_LoadProfile.TabIndex = 31;
+            this.BTN_LoadProfile.Text = "Load Profile";
+            this.BTN_LoadProfile.UseVisualStyleBackColor = true;
+            this.BTN_LoadProfile.Click += new System.EventHandler(this.BTN_LoadProfile_Click);
             // 
-            // savecopy
+            // BTN_BackUp
             // 
-            this.savecopy.Location = new System.Drawing.Point(253, 12);
-            this.savecopy.Name = "savecopy";
-            this.savecopy.Size = new System.Drawing.Size(113, 38);
-            this.savecopy.TabIndex = 29;
-            this.savecopy.Text = "Backup Profile";
-            this.savecopy.UseVisualStyleBackColor = true;
-            this.savecopy.Click += new System.EventHandler(this.savecopy_Click);
+            this.BTN_BackUp.Location = new System.Drawing.Point(253, 12);
+            this.BTN_BackUp.Name = "BTN_BackUp";
+            this.BTN_BackUp.Size = new System.Drawing.Size(113, 38);
+            this.BTN_BackUp.TabIndex = 29;
+            this.BTN_BackUp.Text = "Backup Profile";
+            this.BTN_BackUp.UseVisualStyleBackColor = true;
+            this.BTN_BackUp.Click += new System.EventHandler(this.BTN_BackUp_Click);
             // 
-            // refreshlist
+            // BTN_RefreshListProfile
             // 
-            this.refreshlist.Location = new System.Drawing.Point(282, 68);
-            this.refreshlist.Name = "refreshlist";
-            this.refreshlist.Size = new System.Drawing.Size(75, 23);
-            this.refreshlist.TabIndex = 28;
-            this.refreshlist.Text = "Refresh";
-            this.refreshlist.UseVisualStyleBackColor = true;
-            this.refreshlist.Click += new System.EventHandler(this.refreshlist_Click);
+            this.BTN_RefreshListProfile.Location = new System.Drawing.Point(282, 68);
+            this.BTN_RefreshListProfile.Name = "BTN_RefreshListProfile";
+            this.BTN_RefreshListProfile.Size = new System.Drawing.Size(75, 23);
+            this.BTN_RefreshListProfile.TabIndex = 28;
+            this.BTN_RefreshListProfile.Text = "Refresh";
+            this.BTN_RefreshListProfile.UseVisualStyleBackColor = true;
+            this.BTN_RefreshListProfile.Click += new System.EventHandler(this.BTN_RefreshListProfile_Click);
             // 
-            // newsaveok
+            // LTB_ProfilesList
             // 
-            this.newsaveok.Enabled = false;
-            this.newsaveok.Location = new System.Drawing.Point(195, 71);
-            this.newsaveok.Name = "newsaveok";
-            this.newsaveok.Size = new System.Drawing.Size(39, 20);
-            this.newsaveok.TabIndex = 26;
-            this.newsaveok.Text = "OK";
-            this.newsaveok.UseVisualStyleBackColor = true;
-            this.newsaveok.Click += new System.EventHandler(this.newsaveok_Click);
+            this.LTB_ProfilesList.Location = new System.Drawing.Point(29, 110);
+            this.LTB_ProfilesList.Name = "LTB_ProfilesList";
+            this.LTB_ProfilesList.Size = new System.Drawing.Size(328, 69);
+            this.LTB_ProfilesList.TabIndex = 30;
+            this.LTB_ProfilesList.SelectedIndexChanged += new System.EventHandler(this.LTB_ProfilesList_SelectedIndexChanged);
             // 
-            // textBox1
+            // BTN_OpenSavesFolder
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(29, 71);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(160, 20);
-            this.textBox1.TabIndex = 27;
-            this.textBox1.Text = "New Save Name";
+            this.BTN_OpenSavesFolder.Location = new System.Drawing.Point(16, 253);
+            this.BTN_OpenSavesFolder.Name = "BTN_OpenSavesFolder";
+            this.BTN_OpenSavesFolder.Size = new System.Drawing.Size(135, 24);
+            this.BTN_OpenSavesFolder.TabIndex = 25;
+            this.BTN_OpenSavesFolder.Text = "Open Saves Folder";
+            this.BTN_OpenSavesFolder.UseVisualStyleBackColor = true;
+            this.BTN_OpenSavesFolder.Click += new System.EventHandler(this.BTN_OpenSavesFolder_Click);
             // 
-            // savelist
+            // BTN_NewProfile
             // 
-            this.savelist.Location = new System.Drawing.Point(29, 110);
-            this.savelist.Name = "savelist";
-            this.savelist.Size = new System.Drawing.Size(328, 69);
-            this.savelist.TabIndex = 30;
-            this.savelist.SelectedIndexChanged += new System.EventHandler(this.savelist_SelectedIndexChanged);
+            this.BTN_NewProfile.Location = new System.Drawing.Point(29, 12);
+            this.BTN_NewProfile.Name = "BTN_NewProfile";
+            this.BTN_NewProfile.Size = new System.Drawing.Size(113, 38);
+            this.BTN_NewProfile.TabIndex = 24;
+            this.BTN_NewProfile.Text = "New Profile";
+            this.BTN_NewProfile.UseVisualStyleBackColor = true;
+            this.BTN_NewProfile.Click += new System.EventHandler(this.BTN_NewProfile_Click);
             // 
-            // savefolder
+            // TLP_LabelInfoSession
             // 
-            this.savefolder.Location = new System.Drawing.Point(16, 253);
-            this.savefolder.Name = "savefolder";
-            this.savefolder.Size = new System.Drawing.Size(135, 24);
-            this.savefolder.TabIndex = 25;
-            this.savefolder.Text = "Open Saves Folder";
-            this.savefolder.UseVisualStyleBackColor = true;
-            this.savefolder.Click += new System.EventHandler(this.savefolder_Click);
+            this.TLP_LabelInfoSession.ColumnCount = 2;
+            this.TLP_LabelInfoSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TLP_LabelInfoSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TLP_LabelInfoSession.Controls.Add(this.LBL_CurrentProfile, 1, 1);
+            this.TLP_LabelInfoSession.Controls.Add(this.LBL_LastProfileLoaded, 1, 0);
+            this.TLP_LabelInfoSession.Controls.Add(this.LBL_Label_LastSession, 0, 0);
+            this.TLP_LabelInfoSession.Controls.Add(this.LBL_Label_CurrentSession, 0, 1);
+            this.TLP_LabelInfoSession.Location = new System.Drawing.Point(16, 364);
+            this.TLP_LabelInfoSession.Name = "TLP_LabelInfoSession";
+            this.TLP_LabelInfoSession.RowCount = 2;
+            this.TLP_LabelInfoSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TLP_LabelInfoSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.TLP_LabelInfoSession.Size = new System.Drawing.Size(186, 37);
+            this.TLP_LabelInfoSession.TabIndex = 49;
             // 
-            // newsave
+            // LBL_Label_CurrentSession
             // 
-            this.newsave.Location = new System.Drawing.Point(29, 12);
-            this.newsave.Name = "newsave";
-            this.newsave.Size = new System.Drawing.Size(113, 38);
-            this.newsave.TabIndex = 24;
-            this.newsave.Text = "New Profile";
-            this.newsave.UseVisualStyleBackColor = true;
-            this.newsave.Click += new System.EventHandler(this.newsave_Click);
+            this.LBL_Label_CurrentSession.AutoSize = true;
+            this.LBL_Label_CurrentSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F);
+            this.LBL_Label_CurrentSession.Location = new System.Drawing.Point(3, 18);
+            this.LBL_Label_CurrentSession.Name = "LBL_Label_CurrentSession";
+            this.LBL_Label_CurrentSession.Size = new System.Drawing.Size(74, 12);
+            this.LBL_Label_CurrentSession.TabIndex = 43;
+            this.LBL_Label_CurrentSession.Text = "Actually Loaded:";
             // 
             // SavesUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.useNMSe);
-            this.Controls.Add(this.modssettings);
-            this.Controls.Add(this.gamesettings);
-            this.Controls.Add(this.openmods);
-            this.Controls.Add(this.openbinaries);
-            this.Controls.Add(this.actloaded);
-            this.Controls.Add(this.LBL_CurrentProfile);
-            this.Controls.Add(this.LBL_LastProfileLoaded);
-            this.Controls.Add(this.helplabel);
-            this.Controls.Add(this.checkautoqwerty);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.labelregle);
-            this.Controls.Add(this.checkbkpauto);
-            this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.loadsave);
-            this.Controls.Add(this.savecopy);
-            this.Controls.Add(this.refreshlist);
-            this.Controls.Add(this.newsaveok);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.savelist);
-            this.Controls.Add(this.savefolder);
-            this.Controls.Add(this.newsave);
+            this.Controls.Add(this.TLP_LabelInfoSession);
+            this.Controls.Add(this.CKB_UseNMSE);
+            this.Controls.Add(this.BTN_ModSettings);
+            this.Controls.Add(this.BTN_GameSettings);
+            this.Controls.Add(this.BTN_OpenModsFolder);
+            this.Controls.Add(this.BTN_OpenBinariesFolder);
+            this.Controls.Add(this.CKB_AutoQWERTY);
+            this.Controls.Add(this.LBL_25MIN);
+            this.Controls.Add(this.LBL_20MIN);
+            this.Controls.Add(this.LBL_15MIN);
+            this.Controls.Add(this.LBL_10MIN);
+            this.Controls.Add(this.LBL_5MIN);
+            this.Controls.Add(this.CKB_AutoBackUp);
+            this.Controls.Add(this.TBR_AutoSave);
+            this.Controls.Add(this.BTN_LoadProfile);
+            this.Controls.Add(this.BTN_BackUp);
+            this.Controls.Add(this.BTN_RefreshListProfile);
+            this.Controls.Add(this.LTB_ProfilesList);
+            this.Controls.Add(this.BTN_OpenSavesFolder);
+            this.Controls.Add(this.BTN_NewProfile);
             this.Name = "SavesUserControl";
             this.Size = new System.Drawing.Size(402, 415);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TBR_AutoSave)).EndInit();
+            this.TLP_LabelInfoSession.ResumeLayout(false);
+            this.TLP_LabelInfoSession.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,30 +338,29 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox useNMSe;
-        private System.Windows.Forms.Button modssettings;
-        private System.Windows.Forms.Button gamesettings;
-        private System.Windows.Forms.Button openmods;
-        private System.Windows.Forms.Button openbinaries;
-        private System.Windows.Forms.Label actloaded;
+        private System.Windows.Forms.CheckBox CKB_UseNMSE;
+        private System.Windows.Forms.Button BTN_ModSettings;
+        private System.Windows.Forms.Button BTN_GameSettings;
+        private System.Windows.Forms.Button BTN_OpenModsFolder;
+        private System.Windows.Forms.Button BTN_OpenBinariesFolder;
         private System.Windows.Forms.Label LBL_CurrentProfile;
         private System.Windows.Forms.Label LBL_LastProfileLoaded;
-        private System.Windows.Forms.Label helplabel;
-        private System.Windows.Forms.CheckBox checkautoqwerty;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label labelregle;
-        private System.Windows.Forms.CheckBox checkbkpauto;
-        private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Button loadsave;
-        private System.Windows.Forms.Button savecopy;
-        private System.Windows.Forms.Button refreshlist;
-        private System.Windows.Forms.Button newsaveok;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListBox savelist;
-        private System.Windows.Forms.Button savefolder;
-        private System.Windows.Forms.Button newsave;
+        private System.Windows.Forms.Label LBL_Label_LastSession;
+        private System.Windows.Forms.CheckBox CKB_AutoQWERTY;
+        private System.Windows.Forms.Label LBL_25MIN;
+        private System.Windows.Forms.Label LBL_20MIN;
+        private System.Windows.Forms.Label LBL_15MIN;
+        private System.Windows.Forms.Label LBL_10MIN;
+        private System.Windows.Forms.Label LBL_5MIN;
+        private System.Windows.Forms.CheckBox CKB_AutoBackUp;
+        private System.Windows.Forms.TrackBar TBR_AutoSave;
+        private System.Windows.Forms.Button BTN_LoadProfile;
+        private System.Windows.Forms.Button BTN_BackUp;
+        private System.Windows.Forms.Button BTN_RefreshListProfile;
+        private System.Windows.Forms.ListBox LTB_ProfilesList;
+        private System.Windows.Forms.Button BTN_OpenSavesFolder;
+        private System.Windows.Forms.Button BTN_NewProfile;
+        private System.Windows.Forms.TableLayoutPanel TLP_LabelInfoSession;
+        private System.Windows.Forms.Label LBL_Label_CurrentSession;
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using NMS_Saves_Manager.Managers;
 using System.IO;
 using System.Diagnostics;
+using NMS_Saves_Manager.Forms.Dialogs;
 
 namespace NMS_Saves_Manager.UserControls
 {
@@ -23,70 +24,51 @@ namespace NMS_Saves_Manager.UserControls
             InitializeComponent();
             RefreshProfileList();
             LBL_LastProfileLoaded.Text = _NMSSMManager.CurrentProfile;
-            savelist.SelectedItem  = _NMSSMManager.CurrentProfile;
+            LTB_ProfilesList.SelectedItem  = _NMSSMManager.CurrentProfile;
         }
 
-        private void newsave_Click(object sender, EventArgs e)
+        #region Privates
+
+        /// <summary>
+        /// Update the profile list
+        /// </summary>
+        private void RefreshProfileList()
         {
-            textBox1.Enabled = true;
-            newsaveok.Enabled = true;
-            textBox1.Text = "";
-            this.ActiveControl = textBox1;
+            LTB_ProfilesList.Items.Clear();
+            _SaveManager.GetProfileList().ForEach(s => LTB_ProfilesList.Items.Add(s));
         }
 
-        private void newsaveok_Click(object sender, EventArgs e)
-        {
-            _SaveManager.CreateNewEmptyProfile(textBox1.Text);
-        }
+        #endregion
 
+        #region Events
 
-        private void savecopy_Click(object sender, EventArgs e)
+        private void BTN_BackUp_Click(object sender, EventArgs e)
         {
-            if (savelist.SelectedIndex == -1)
+            if (LTB_ProfilesList.SelectedIndex == -1)
             {
                 MessageBox.Show("Please select a save first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
-                string name = savelist.SelectedItem.ToString();
+                string name = LTB_ProfilesList.SelectedItem.ToString();
                 _SaveManager.BackupProfile(name);
                 MessageBox.Show("Backup of " + name + "'s profile done. You can restore it by renaming " + name + "_old to " + name + " in saves folder", "NMS Saves Manager: Backup successfull", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void RefreshProfileList()
+        private void BTN_NewProfile_Click(object sender, EventArgs e)
         {
-            savelist.Items.Clear();
-            _SaveManager.GetProfileList().ForEach(s => savelist.Items.Add(s));
+            using (AskProfileNameDialog dialog = new AskProfileNameDialog())
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _SaveManager.CreateNewEmptyProfile(dialog.Result);
+                }
+
+            }
         }
 
-        private void refreshlist_Click(object sender, EventArgs e)
-        {
-            RefreshProfileList();
-        }
-
-        private void savefolder_Click(object sender, EventArgs e)
-        {
-            Process.Start(_NMSSMManager.NMSSavePath);
-        }
-
-        private void openbinaries_Click(object sender, EventArgs e)
-        {
-            Process.Start(_NMSSMManager.NMSBinariesPath);
-        }
-
-        private void openmods_Click(object sender, EventArgs e)
-        {
-            Process.Start(_NMSSMManager.NMSModsPath);
-        }
-
-        private void savelist_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _NMSSMManager.CurrentProfile = savelist.SelectedItem.ToString();
-            LBL_CurrentProfile.Text = _NMSSMManager.CurrentProfile;
-        }
-
-        private void loadsave_Click(object sender, EventArgs e)
+        private void BTN_LoadProfile_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(_NMSSMManager.CurrentProfile))
             {
@@ -97,5 +79,39 @@ namespace NMS_Saves_Manager.UserControls
                 _NMSSMManager.SetLastProfileLoaded();
             }
         }
+
+        private void BTN_OpenModsFolder_Click(object sender, EventArgs e)
+        {
+            Process.Start(_NMSSMManager.NMSModsPath);
+        }
+
+        private void BTN_OpenSavesFolder_Click(object sender, EventArgs e)
+        {
+            Process.Start(_NMSSMManager.NMSSavePath);
+        }
+
+        private void BTN_RefreshListProfile_Click(object sender, EventArgs e)
+        {
+            RefreshProfileList();
+        }
+
+        private void BTN_OpenBinariesFolder_Click(object sender, EventArgs e)
+        {
+            Process.Start(_NMSSMManager.NMSBinariesPath);
+        }
+
+        private void CKB_AutoBackUp_CheckedChanged(object sender, EventArgs e)
+        {
+            TBR_AutoSave.Enabled = CKB_AutoBackUp.Checked;
+
+        }
+
+        private void LTB_ProfilesList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _NMSSMManager.CurrentProfile = LTB_ProfilesList.SelectedItem.ToString();
+            LBL_CurrentProfile.Text = _NMSSMManager.CurrentProfile;
+        }
+
+        #endregion
     }
 }
