@@ -45,13 +45,14 @@
             this.CKB_AutoBackUp = new System.Windows.Forms.CheckBox();
             this.TBR_AutoSave = new System.Windows.Forms.TrackBar();
             this.BTN_LoadProfile = new System.Windows.Forms.Button();
-            this.BTN_BackUp = new System.Windows.Forms.Button();
+            this.BTN_BackUpProfile = new System.Windows.Forms.Button();
             this.BTN_RefreshListProfile = new System.Windows.Forms.Button();
             this.LTB_ProfilesList = new System.Windows.Forms.ListBox();
             this.BTN_OpenSavesFolder = new System.Windows.Forms.Button();
             this.BTN_NewProfile = new System.Windows.Forms.Button();
             this.TLP_LabelInfoSession = new System.Windows.Forms.TableLayoutPanel();
             this.LBL_Label_CurrentSession = new System.Windows.Forms.Label();
+            this.BTN_RestoreProfile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TBR_AutoSave)).BeginInit();
             this.TLP_LabelInfoSession.SuspendLayout();
             this.SuspendLayout();
@@ -206,7 +207,6 @@
             // 
             // TBR_AutoSave
             // 
-            this.TBR_AutoSave.Enabled = false;
             this.TBR_AutoSave.Location = new System.Drawing.Point(5, 196);
             this.TBR_AutoSave.Maximum = 25;
             this.TBR_AutoSave.Name = "TBR_AutoSave";
@@ -227,15 +227,15 @@
             this.BTN_LoadProfile.UseVisualStyleBackColor = true;
             this.BTN_LoadProfile.Click += new System.EventHandler(this.BTN_LoadProfile_Click);
             // 
-            // BTN_BackUp
+            // BTN_BackUpProfile
             // 
-            this.BTN_BackUp.Location = new System.Drawing.Point(253, 12);
-            this.BTN_BackUp.Name = "BTN_BackUp";
-            this.BTN_BackUp.Size = new System.Drawing.Size(113, 38);
-            this.BTN_BackUp.TabIndex = 29;
-            this.BTN_BackUp.Text = "Backup Profile";
-            this.BTN_BackUp.UseVisualStyleBackColor = true;
-            this.BTN_BackUp.Click += new System.EventHandler(this.BTN_BackUp_Click);
+            this.BTN_BackUpProfile.Location = new System.Drawing.Point(148, 12);
+            this.BTN_BackUpProfile.Name = "BTN_BackUpProfile";
+            this.BTN_BackUpProfile.Size = new System.Drawing.Size(113, 38);
+            this.BTN_BackUpProfile.TabIndex = 29;
+            this.BTN_BackUpProfile.Text = "Backup Profile";
+            this.BTN_BackUpProfile.UseVisualStyleBackColor = true;
+            this.BTN_BackUpProfile.Click += new System.EventHandler(this.BTN_BackUpProfile_Click);
             // 
             // BTN_RefreshListProfile
             // 
@@ -302,10 +302,21 @@
             this.LBL_Label_CurrentSession.TabIndex = 43;
             this.LBL_Label_CurrentSession.Text = "Actually Loaded:";
             // 
+            // BTN_RestoreProfile
+            // 
+            this.BTN_RestoreProfile.Location = new System.Drawing.Point(267, 12);
+            this.BTN_RestoreProfile.Name = "BTN_RestoreProfile";
+            this.BTN_RestoreProfile.Size = new System.Drawing.Size(114, 38);
+            this.BTN_RestoreProfile.TabIndex = 50;
+            this.BTN_RestoreProfile.Text = "Restore Profile";
+            this.BTN_RestoreProfile.UseVisualStyleBackColor = true;
+            this.BTN_RestoreProfile.Click += new System.EventHandler(this.BTN_RestoreProfile_Click);
+            // 
             // SavesUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.BTN_RestoreProfile);
             this.Controls.Add(this.TLP_LabelInfoSession);
             this.Controls.Add(this.CKB_UseNMSE);
             this.Controls.Add(this.BTN_ModSettings);
@@ -321,7 +332,7 @@
             this.Controls.Add(this.CKB_AutoBackUp);
             this.Controls.Add(this.TBR_AutoSave);
             this.Controls.Add(this.BTN_LoadProfile);
-            this.Controls.Add(this.BTN_BackUp);
+            this.Controls.Add(this.BTN_BackUpProfile);
             this.Controls.Add(this.BTN_RefreshListProfile);
             this.Controls.Add(this.LTB_ProfilesList);
             this.Controls.Add(this.BTN_OpenSavesFolder);
@@ -355,12 +366,13 @@
         private System.Windows.Forms.CheckBox CKB_AutoBackUp;
         private System.Windows.Forms.TrackBar TBR_AutoSave;
         private System.Windows.Forms.Button BTN_LoadProfile;
-        private System.Windows.Forms.Button BTN_BackUp;
+        private System.Windows.Forms.Button BTN_BackUpProfile;
         private System.Windows.Forms.Button BTN_RefreshListProfile;
         private System.Windows.Forms.ListBox LTB_ProfilesList;
         private System.Windows.Forms.Button BTN_OpenSavesFolder;
         private System.Windows.Forms.Button BTN_NewProfile;
         private System.Windows.Forms.TableLayoutPanel TLP_LabelInfoSession;
         private System.Windows.Forms.Label LBL_Label_CurrentSession;
+        private System.Windows.Forms.Button BTN_RestoreProfile;
     }
 }

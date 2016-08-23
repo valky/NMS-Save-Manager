@@ -57,6 +57,12 @@
     <Compile Include="Forms\Dialogs\AskProfileNameDialog.Designer.cs">
       <DependentUpon>AskProfileNameDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Dialogs\SelectBackUpProfileDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialogs\SelectBackUpProfileDialog.Designer.cs">
+      <DependentUpon>SelectBackUpProfileDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\Dialogs\AskProfileNameDialog.resx">
       <DependentUpon>AskProfileNameDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dialogs\SelectBackUpProfileDialog.resx">
+      <DependentUpon>SelectBackUpProfileDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

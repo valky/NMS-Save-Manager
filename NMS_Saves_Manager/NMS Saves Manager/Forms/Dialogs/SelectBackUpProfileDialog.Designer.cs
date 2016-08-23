@@ -1,6 +1,6 @@
 ﻿namespace NMS_Saves_Manager.Forms.Dialogs
 {
-    partial class AskProfileNameDialog
+    partial class SelectBackUpProfileDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -28,57 +28,55 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AskProfileNameDialog));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectBackUpProfileDialog));
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.BTN_NewSaveOK = new System.Windows.Forms.Button();
-            this.TBX_ProfileName = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(13, 13);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(298, 21);
+            this.comboBox1.TabIndex = 0;
             // 
             // BTN_NewSaveOK
             // 
-            this.BTN_NewSaveOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.BTN_NewSaveOK.Location = new System.Drawing.Point(178, 12);
+            this.BTN_NewSaveOK.Location = new System.Drawing.Point(317, 14);
             this.BTN_NewSaveOK.Name = "BTN_NewSaveOK";
             this.BTN_NewSaveOK.Size = new System.Drawing.Size(39, 20);
-            this.BTN_NewSaveOK.TabIndex = 28;
+            this.BTN_NewSaveOK.TabIndex = 29;
             this.BTN_NewSaveOK.Text = "OK";
             this.BTN_NewSaveOK.UseVisualStyleBackColor = true;
+            this.BTN_NewSaveOK.Click += new System.EventHandler(this.BTN_NewSaveOK_Click);
             // 
-            // TBX_ProfileName
+            // SelectBackUpProfileDialog
             // 
-            this.TBX_ProfileName.Location = new System.Drawing.Point(12, 12);
-            this.TBX_ProfileName.Name = "TBX_ProfileName";
-            this.TBX_ProfileName.Size = new System.Drawing.Size(160, 20);
-            this.TBX_ProfileName.TabIndex = 29;
-            this.TBX_ProfileName.Text = "New Profile Name";
-            this.TBX_ProfileName.Enter += new System.EventHandler(this.TBX_ProfileName_Enter);
-            // 
-            // AskProfileNameDialog
-            // 
-            this.AcceptButton = this.BTN_NewSaveOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(224, 40);
+            this.ClientSize = new System.Drawing.Size(361, 45);
             this.Controls.Add(this.BTN_NewSaveOK);
-            this.Controls.Add(this.TBX_ProfileName);
+            this.Controls.Add(this.comboBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(240, 79);
+            this.MaximumSize = new System.Drawing.Size(377, 84);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(240, 79);
-            this.Name = "AskProfileNameDialog";
+            this.MinimumSize = new System.Drawing.Size(377, 84);
+            this.Name = "SelectBackUpProfileDialog";
             this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Profile Name";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AskProfileNameDialog_FormClosing);
+            this.Text = "Select a backup to restore";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SelectBackUpProfileDialog_FormClosing);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
+        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button BTN_NewSaveOK;
-        private System.Windows.Forms.TextBox TBX_ProfileName;
     }
 }

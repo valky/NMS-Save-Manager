@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using NMS_Saves_Manager.Forms.Dialogs;
 using NMS_Saves_Manager.Managers;
-using System.IO;
+using System;
 using System.Diagnostics;
-using NMS_Saves_Manager.Forms.Dialogs;
+using System.Windows.Forms;
 
 namespace NMS_Saves_Manager.UserControls
 {
@@ -42,20 +34,6 @@ namespace NMS_Saves_Manager.UserControls
 
         #region Events
 
-        private void BTN_BackUp_Click(object sender, EventArgs e)
-        {
-            if (LTB_ProfilesList.SelectedIndex == -1)
-            {
-                MessageBox.Show("Please select a save first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                string name = LTB_ProfilesList.SelectedItem.ToString();
-                _SaveManager.BackupProfile(name);
-                MessageBox.Show("Backup of " + name + "'s profile done. You can restore it by renaming " + name + "_old to " + name + " in saves folder", "NMS Saves Manager: Backup successfull", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
         private void BTN_NewProfile_Click(object sender, EventArgs e)
         {
             using (AskProfileNameDialog dialog = new AskProfileNameDialog())
@@ -64,8 +42,8 @@ namespace NMS_Saves_Manager.UserControls
                 {
                     _SaveManager.CreateNewEmptyProfile(dialog.Result);
                 }
-
             }
+            RefreshProfileList();
         }
 
         private void BTN_LoadProfile_Click(object sender, EventArgs e)
@@ -77,6 +55,38 @@ namespace NMS_Saves_Manager.UserControls
             else
             {
                 _NMSSMManager.SetLastProfileLoaded();
+            }
+        }
+
+        private void BTN_BackUpProfile_Click(object sender, EventArgs e)
+        {
+            if (LTB_ProfilesList.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a save first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                _SaveManager.BackupProfile(_NMSSMManager.CurrentProfile);
+                MessageBox.Show("Backup of " + _NMSSMManager.CurrentProfile + "'s profile done. You can restore it by renaming " + _NMSSMManager.CurrentProfile + "_old to " + _NMSSMManager.CurrentProfile + " in saves folder", "NMS Saves Manager: Backup successfull", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void BTN_RestoreProfile_Click(object sender, EventArgs e)
+        {
+            if (LTB_ProfilesList.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a save first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                using (SelectBackUpProfileDialog dialog = new SelectBackUpProfileDialog())
+                {
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        _SaveManager.RestoreBackUpProfile(dialog.Result, _NMSSMManager.CurrentProfile);
+                    }
+
+                }
             }
         }
 
@@ -113,5 +123,6 @@ namespace NMS_Saves_Manager.UserControls
         }
 
         #endregion
+
     }
 }
