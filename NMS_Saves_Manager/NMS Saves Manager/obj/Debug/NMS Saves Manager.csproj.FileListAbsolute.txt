@@ -1,1 +1,2 @@
 F:\Dev\NMS Save Manager\git\NMS_Saves_Manager\NMS Saves Manager\bin\Debug\NMS Saves Manager.exe.config
+C:\Users\ScavangeR\Source\Git\NMS\NMS_Saves_Manager\NMS Saves Manager\bin\Debug\NMS Saves Manager.exe.config
